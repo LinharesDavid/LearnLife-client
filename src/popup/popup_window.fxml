@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="popup.PopupController"
+            alignment="CENTER"
+            hgap="10"
+            vgap="10">
+
+    <Label fx:id="lbl_message"
+           GridPane.rowIndex="0"
+           GridPane.columnIndex="0"
+           GridPane.columnSpan="2" />
+
+    <Button fx:id="btn_ok"
+            GridPane.rowIndex="1"
+            GridPane.columnIndex="0"
+            GridPane.columnSpan="1" />
+
+    <Button fx:id="btn_nok"
+            GridPane.rowIndex="1"
+            GridPane.columnIndex="1" />
+
+</GridPane>
