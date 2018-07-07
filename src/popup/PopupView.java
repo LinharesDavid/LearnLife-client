@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -22,6 +23,7 @@ public class PopupView {
             controller.setText(message, btnOk);
             stage.setTitle(title);
             scene = new Scene(rootLayout, 200, 200);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.show();
         } catch (Exception e) {

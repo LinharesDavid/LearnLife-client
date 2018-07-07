@@ -30,7 +30,7 @@
             GridPane.columnIndex="0"
             GridPane.rowIndex="2" />
 
-    <TextField
+    <PasswordField
             fx:id="txf_password"
             GridPane.columnIndex="1"
             GridPane.rowIndex="2" />
