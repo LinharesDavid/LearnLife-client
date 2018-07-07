@@ -3,16 +3,9 @@ package login;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import utils.request.builder.OnRequestFailListener;
-import utils.request.builder.OnRequestSuccessListener;
+import org.json.JSONObject;
+import utils.Session;
 import utils.request.builder.RequestBuilder;
-
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 import static utils.Constants.*;
 
@@ -29,23 +22,25 @@ public class LoginController {
         try {
             RequestBuilder.builder()
                 .setUrl(BASE_URL + EXTENDED_URL_LOGIN)
-                .addRequestBodyParameter("email", login)
-                .addRequestBodyParameter("password", pwd)
-                .addRequestProperty("Content-Type", "application/json")
+                .addRequestBodyParameter(BODY_PARAMETER_EMAIL, login)
+                .addRequestBodyParameter(BODY_PARAMETER_PASSWORD, pwd)
+                .addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON)
                 .setRequestMethod("POST")
                 .setOnResponseFailListener((errCode, res) -> listener.onConnexionFailed(res))
                 .setOnResponseSuccessListener(response -> {
-                    if (response.contains("token")) {
+                    if (response.contains(RESPONSE_FIELD_TOKEN)) {
+                        JSONObject jsonObject = new JSONObject(response);
+                        Session.getInstance().setToken(jsonObject.getString(RESPONSE_FIELD_TOKEN));
                         listener.onConnexionSuccess();
                     } else {
-                        listener.onConnexionFailed("unknown error");
+                        listener.onConnexionFailed(ERR_UNKNOWN);
                     }
                 })
                 .build();
 
         } catch (Exception e) {
             e.printStackTrace();
-            listener.onConnexionFailed("unknown error");
+            listener.onConnexionFailed(ERR_UNKNOWN);
         }
     }
 

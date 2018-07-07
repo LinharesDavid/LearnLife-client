@@ -1,16 +1,10 @@
 package login;
 
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
-import javafx.stage.Popup;
-import javafx.stage.PopupWindow;
 import javafx.stage.Stage;
-import login.LoginController;
 import popup.PopupView;
 
 public class LoginView implements LoginController.ConnexionListener{

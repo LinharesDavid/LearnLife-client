@@ -1,13 +1,14 @@
 package utils.request.builder;
 
-import javax.json.Json;
-import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+import org.json.JSONObject;
+
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+
+import static utils.Constants.*;
 
 public class RequestBuilder {
 
@@ -17,6 +18,8 @@ public class RequestBuilder {
     private String requestMethod;
     private OnRequestFailListener onResponseFailListener;
     private OnRequestSuccessListener onResponseSuccessListener;
+    private int connectTimeout = 1000;
+    private int readTimeout = 1000;
 
     public static RequestBuilder builder() {
         return new RequestBuilder();
@@ -24,17 +27,19 @@ public class RequestBuilder {
 
     public void build() {
         try {
-            JsonObjectBuilder jsonObjectBuilder = Json.createObjectBuilder();
-            requestBodyParameters.forEach(jsonObjectBuilder::add);
-            JsonObject jsonObject = jsonObjectBuilder.build();
+            JSONObject jsonObject = new JSONObject();
+            requestBodyParameters.forEach(jsonObject::put);
             URL url = new URL(this.url);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(requestMethod);
             con.setDoOutput(true);
             con.setDoInput(true);
-            requestProperties.forEach(con::addRequestProperty);
-            con.setConnectTimeout(1000);
-            con.setReadTimeout(1000);
+            if (requestProperties.isEmpty())
+                con.addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON);
+            else
+                requestProperties.forEach(con::addRequestProperty);
+            con.setConnectTimeout(connectTimeout);
+            con.setReadTimeout(readTimeout);
             OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
             wr.write(jsonObject.toString());
             wr.flush();
@@ -42,11 +47,11 @@ public class RequestBuilder {
             int errCode;
             if ((errCode = con.getResponseCode()) != 200) {
                 content = readResponse(con.getErrorStream());
-                onResponseFailListener.onRequestFail(errCode, content == null ? "unknown error" : content.toString());
+                onResponseFailListener.onRequestFail(errCode, content == null ? ERR_UNKNOWN : content.toString());
 
             } else {
                 content = readResponse(con.getInputStream());
-                onResponseSuccessListener.onRequestSuccess(content == null ? "Error while reading response" : content.toString());
+                onResponseSuccessListener.onRequestSuccess(content == null ? ERR_READING_RESPONSE : content.toString());
             }
             con.disconnect();
 
@@ -101,6 +106,16 @@ public class RequestBuilder {
 
     public RequestBuilder setOnResponseSuccessListener(OnRequestSuccessListener onResponseSuccessListener) {
         this.onResponseSuccessListener = onResponseSuccessListener;
+        return this;
+    }
+
+    public RequestBuilder setConnectTimeout(int connectTimeout) {
+        this.connectTimeout = connectTimeout;
+        return this;
+    }
+
+    public RequestBuilder setReadTimeout(int readTimeout) {
+        this.readTimeout = readTimeout;
         return this;
     }
 }

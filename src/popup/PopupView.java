@@ -22,7 +22,7 @@ public class PopupView {
             PopupController controller = loader.getController();
             controller.setText(message, btnOk);
             stage.setTitle(title);
-            scene = new Scene(rootLayout, 200, 200);
+            scene = new Scene(rootLayout, 200, 150);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.show();
