@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import login.LoginView;
+import login.LoginController;
 
 public class Main extends Application {
 
@@ -17,8 +17,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 400, 400));
         primaryStage.show();
 
-        LoginView loginView = new LoginView();
-        loginView.start();
+        LoginController loginController = new LoginController();
+        loginController.start();
     }
 
 

@@ -36,10 +36,10 @@
             GridPane.rowIndex="2" />
 
     <Button
+            fx:id="btn_validate"
             mnemonicParsing="false"
             text="Validate"
             GridPane.columnIndex="1"
-            GridPane.rowIndex="3"
-            onAction="#onBtnValidateClick"/>
+            GridPane.rowIndex="3"/>
 
 </GridPane>
