@@ -1,16 +1,22 @@
 package login;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+import javafx.stage.WindowEvent;
+import main.Main;
+import main.OnCloseLoginListener;
 import popup.PopupView;
 
 public class LoginView implements LoginController.ConnexionListener{
 
     private Stage stage = new Stage();
     private LoginController controller;
+    private OnCloseLoginListener onCloseLoginListener;
 
     public void start() {
         Scene scene;
@@ -22,12 +28,19 @@ public class LoginView implements LoginController.ConnexionListener{
             controller.setListener(this);
             scene = new Scene(rootLayout, 300, 200);
             stage.setScene(scene);
+            stage.setMaximized(false);
+            stage.initStyle(StageStyle.UTILITY);
+            stage.setOnCloseRequest(this::onCloseWindow);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    private void onCloseWindow(WindowEvent event){
+        onCloseLoginListener.onCloseLogin();
     }
 
     @Override
@@ -42,5 +55,9 @@ public class LoginView implements LoginController.ConnexionListener{
         popupView.addOnBtnOkListener(event -> {
             System.out.println("clicked bitch suce ma cite sous la pluie stp");
         });
+    }
+
+    public void setOnCloseLoginListener(OnCloseLoginListener listener) {
+        onCloseLoginListener = listener;
     }
 }

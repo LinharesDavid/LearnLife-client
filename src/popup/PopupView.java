@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class PopupView {
@@ -25,6 +26,7 @@ public class PopupView {
             scene = new Scene(rootLayout, 200, 150);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
+            stage.initStyle(StageStyle.UTILITY);
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
