@@ -28,11 +28,12 @@ public class RequestBuilder {
     public void build() {
         try {
             JSONObject jsonObject = new JSONObject();
-            requestBodyParameters.forEach(jsonObject::put);
+            if (!requestBodyParameters.isEmpty()) {
+                requestBodyParameters.forEach(jsonObject::put);
+            }
             URL url = new URL(this.url);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod(requestMethod);
-            con.setDoOutput(true);
             con.setDoInput(true);
             if (requestProperties.isEmpty())
                 con.addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON);
@@ -40,11 +41,15 @@ public class RequestBuilder {
                 requestProperties.forEach(con::addRequestProperty);
             con.setConnectTimeout(connectTimeout);
             con.setReadTimeout(readTimeout);
-            OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
-            wr.write(jsonObject.toString());
-            wr.flush();
+            if (!this.requestMethod.equals("GET")) {
+                con.setDoOutput(true);
+                OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
+                wr.write(jsonObject.toString());
+                wr.flush();
+            }
             StringBuffer content;
             int errCode;
+            System.out.println("sending " + con.getRequestMethod() + " to " + con.getURL());
             if ((errCode = con.getResponseCode()) != 200) {
                 content = readResponse(con.getErrorStream());
                 onResponseFailListener.onRequestFail(errCode, content == null ? ERR_UNKNOWN : content.toString());

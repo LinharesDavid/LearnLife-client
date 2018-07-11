@@ -40,11 +40,12 @@ public class LoginView implements LoginController.ConnexionListener{
     }
 
     private void onCloseWindow(WindowEvent event){
-        onCloseLoginListener.onCloseLogin();
+        onCloseLoginListener.onCloseLogin(false);
     }
 
     @Override
     public void onConnexionSuccess() {
+        onCloseLoginListener.onCloseLogin(true);
         stage.close();
     }
 
