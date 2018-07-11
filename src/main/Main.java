@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import login.LoginView;
+import utils.Log;
+
 import static utils.Constants.*;
 
 public class Main extends Application implements OnCloseLoginListener{
@@ -14,6 +16,7 @@ public class Main extends Application implements OnCloseLoginListener{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        Log.i("program started");
         this.primaryStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle(MAIN_WINDOW_TITLE);
