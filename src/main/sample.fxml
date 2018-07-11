@@ -1,0 +1,22 @@
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane fx:controller="main.MainController"
+            xmlns:fx="http://javafx.com/fxml">
+
+    <top>
+
+    </top>
+
+    <left>
+
+    </left>
+
+    <bottom>
+
+    </bottom>
+
+    <right>
+
+    </right>
+
+
+</BorderPane>
