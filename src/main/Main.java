@@ -17,7 +17,6 @@ public class Main extends Application implements OnCloseLoginListener{
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Log.i("program started");
         this.primaryStage = primaryStage;
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("sample.fxml"));
@@ -41,7 +40,7 @@ public class Main extends Application implements OnCloseLoginListener{
     @Override
     public void onCloseLogin(boolean connected) {
         if (connected) {
-            mainController.getAllUsers();
+            mainController.start();
         } else {
             primaryStage.close();
         }

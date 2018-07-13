@@ -1,6 +1,7 @@
 package utils.request.builder;
 
 import org.json.JSONObject;
+import utils.Log;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -13,7 +14,7 @@ import static utils.Constants.*;
 public class RequestBuilder {
 
     private String url;
-    private Map<String, String> requestBodyParameters = new HashMap<>();
+    private Map<String, Object> requestBodyParameters = new HashMap<>();
     private Map<String, String> requestProperties = new HashMap<>();
     private String requestMethod;
     private OnRequestFailListener onResponseFailListener;
@@ -48,16 +49,21 @@ public class RequestBuilder {
                 wr.flush();
             }
             StringBuffer content;
-            int errCode;
-            System.out.println("sending " + con.getRequestMethod() + " to " + con.getURL());
-            if ((errCode = con.getResponseCode()) != 200) {
-                content = readResponse(con.getErrorStream());
-                onResponseFailListener.onRequestFail(errCode, content == null ? ERR_UNKNOWN : content.toString());
-
-            } else {
+            Log.i("sending " + con.getRequestMethod() + " to " + con.getURL());
+            int errCode = con.getResponseCode();
+            if (errCode == 200 || errCode == 201) {
                 content = readResponse(con.getInputStream());
+                Log.i(con.getRequestMethod() + " to " + con.getURL() + " succeed : " + errCode);
+                assert content != null;
+                Log.i(content.toString());
                 onResponseSuccessListener.onRequestSuccess(content == null ? ERR_READING_RESPONSE : content.toString());
-            }
+            } else if ((errCode = con.getResponseCode()) != 200) {
+                Log.i(con.getRequestMethod() + " to " + con.getURL() + " failed : " + errCode);
+                content = readResponse(con.getErrorStream());
+                assert content != null;
+                Log.i(content.toString());
+                onResponseFailListener.onRequestFail(errCode, content == null ? ERR_UNKNOWN : content.toString());
+            } else
             con.disconnect();
 
         } catch (Exception e){
@@ -89,7 +95,7 @@ public class RequestBuilder {
         return this;
     }
 
-    public RequestBuilder addRequestBodyParameter(String key, String value) {
+    public RequestBuilder addRequestBodyParameter(String key, Object value) {
         this.requestBodyParameters.put(key, value);
         return this;
     }
