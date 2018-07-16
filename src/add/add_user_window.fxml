@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<GridPane alignment="CENTER" hgap="10" prefHeight="305.0" prefWidth="359.0" vgap="10"
+          xmlns="http://javafx.com/javafx"
+          xmlns:fx="http://javafx.com/fxml"
+          fx:controller="add.AddController">
+
+   <Label text="Email :"/>
+   <Label text="Password :" GridPane.rowIndex="1"/>
+   <Label text="Firstname :" GridPane.rowIndex="2"/>
+   <Label text="Lastname: " GridPane.rowIndex="3"/>
+   <Label text="Role :" GridPane.rowIndex="4"/>
+   <TextField fx:id="txf_user_email" GridPane.columnIndex="1"/>
+   <PasswordField fx:id="pwf_user_password" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+   <TextField fx:id="txf_user_firstname" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+   <TextField fx:id="txf_user_lastname" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+   <ComboBox fx:id="cmb_user_role" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+       <items>
+           <FXCollections fx:factory="observableArrayList">
+               <String fx:value="User"  />
+               <String fx:value="Admin" />
+           </FXCollections>
+       </items>
+       <value>
+           <String fx:value="User" />
+       </value>
+   </ComboBox>
+   <Button mnemonicParsing="false" text="Validate" GridPane.columnIndex="1" GridPane.halignment="RIGHT"
+           onAction="#onBtnValidateUserClick"
+           GridPane.rowIndex="5"/>
+   <Button mnemonicParsing="false" text="Cancel" GridPane.rowIndex="5" onAction="#onBtnCancelClick"/>
+</GridPane>

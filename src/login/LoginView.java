@@ -1,6 +1,5 @@
 package login;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.GridPane;
@@ -8,7 +7,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import main.Main;
 import main.OnCloseLoginListener;
 import popup.PopupView;
 
@@ -40,11 +38,12 @@ public class LoginView implements LoginController.ConnexionListener{
     }
 
     private void onCloseWindow(WindowEvent event){
-        onCloseLoginListener.onCloseLogin();
+        onCloseLoginListener.onCloseLogin(false);
     }
 
     @Override
     public void onConnexionSuccess() {
+        onCloseLoginListener.onCloseLogin(true);
         stage.close();
     }
 
@@ -53,7 +52,6 @@ public class LoginView implements LoginController.ConnexionListener{
         PopupView popupView = new PopupView();
         popupView.start("Error", err, "OK");
         popupView.addOnBtnOkListener(event -> {
-            System.out.println("clicked bitch suce ma cite sous la pluie stp");
         });
     }
 

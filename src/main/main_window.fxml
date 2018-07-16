@@ -1,4 +1,6 @@
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ListView?>
 <BorderPane fx:controller="main.MainController"
             xmlns:fx="http://javafx.com/fxml">
 
@@ -7,6 +9,10 @@
     </top>
 
     <left>
+        <ListView
+            fx:id="listView">
+
+        </ListView>
 
     </left>
 
@@ -17,6 +23,13 @@
     <right>
 
     </right>
+
+    <center>
+        <TableView
+            fx:id="tableView">
+
+        </TableView>
+    </center>
 
 
 </BorderPane>

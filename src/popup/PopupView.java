@@ -4,10 +4,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 
 
 public class PopupView {
@@ -35,8 +37,10 @@ public class PopupView {
 
     public void addOnBtnOkListener(EventHandler event) {
         Button btnOk = (Button) scene.lookup("#btn_ok");
-        btnOk.setOnAction(event);
-        btnOk.setOnAction(e -> stage.close());
+        if (event != null) {
+            btnOk.addEventHandler(MouseEvent.MOUSE_CLICKED, event);
+        }
+        btnOk.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> stage.close());
     }
 
     public void start(String title, String message, String btnOk, String btnNok) {

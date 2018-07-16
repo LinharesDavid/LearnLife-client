@@ -1,5 +1,5 @@
 package main;
 
 public interface OnCloseLoginListener {
-    void onCloseLogin();
+    void onCloseLogin(boolean connected);
 }

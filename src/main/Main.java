@@ -13,12 +13,15 @@ import static utils.Constants.*;
 public class Main extends Application implements OnCloseLoginListener{
 
     private Stage primaryStage;
+    private MainController mainController;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Log.i("program started");
         this.primaryStage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("main_window.fxml"));
+        Parent root = loader.load();
+        mainController = loader.getController();
         primaryStage.setTitle(MAIN_WINDOW_TITLE);
         primaryStage.setScene(new Scene(root, 400, 400));
         primaryStage.setMaximized(true);
@@ -35,7 +38,11 @@ public class Main extends Application implements OnCloseLoginListener{
     }
 
     @Override
-    public void onCloseLogin() {
-        primaryStage.close();
+    public void onCloseLogin(boolean connected) {
+        if (connected) {
+            mainController.start();
+        } else {
+            primaryStage.close();
+        }
     }
 }

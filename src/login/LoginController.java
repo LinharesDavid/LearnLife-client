@@ -28,12 +28,12 @@ public class LoginController {
                 .setRequestMethod("POST")
                 .setOnResponseFailListener((errCode, res) -> listener.onConnexionFailed(res))
                 .setOnResponseSuccessListener(response -> {
-                    if (response.contains(RESPONSE_FIELD_TOKEN)) {
-                        JSONObject jsonObject = new JSONObject(response);
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getJSONObject(MODEL_NAME_USER).getInt(JSON_ENTRY_KEY_USER_ROLE) == 1) {
                         Session.getInstance().setToken(jsonObject.getString(RESPONSE_FIELD_TOKEN));
                         listener.onConnexionSuccess();
                     } else {
-                        listener.onConnexionFailed(ERR_UNKNOWN);
+                        listener.onConnexionFailed("user not an admin");
                     }
                 })
                 .build();
