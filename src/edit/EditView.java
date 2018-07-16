@@ -1,4 +1,4 @@
-package add;
+package edit;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -6,27 +6,25 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.Tag;
 
 import static utils.Constants.ADD_ITEM_WINDOW_TITLE;
 
-public class AddView {
+public class EditView {
+
     private Scene scene;
     private Stage stage = new Stage();
-    private AddController controller;
-    private OnAddSuccessCloseWindowListener listener;
+    private EditController controller;
+    private OnEditSuccessCloseWindowListener listener;
 
-    public void start(String type) {
+    public void start(String type, String json) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            String filename = "add_" + type.toLowerCase() + "_window.fxml";
+            String filename = "edit_window.fxml";
             loader.setLocation(getClass().getResource(filename));
             GridPane rootLayout = loader.load();
             controller = loader.getController();
             controller.setView(this);
-            if (type.toLowerCase().equals(Tag.class.getSimpleName().toLowerCase())) {
-                controller.setUpTagLayout();
-            }
+            controller.setJsonText(json, type);
             stage.setTitle(ADD_ITEM_WINDOW_TITLE + type);
             scene = new Scene(rootLayout);
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -43,15 +41,15 @@ public class AddView {
         stage.close();
     }
 
-    public void onAddSuccess(String type) {
-        listener.onAddSuccessCloseWindowListener(type);
+    public void onSuccess() {
+        listener.onEditSuccessCloseWindow();
     }
 
-    public void setOnCloseAddWindowListener(OnAddSuccessCloseWindowListener listener) {
+    public void setOnCloseEditWindowListener(OnEditSuccessCloseWindowListener listener) {
         this.listener = listener;
     }
 
-    public interface OnAddSuccessCloseWindowListener {
-        void onAddSuccessCloseWindowListener(String type);
+    public interface OnEditSuccessCloseWindowListener {
+        void onEditSuccessCloseWindow();
     }
 }

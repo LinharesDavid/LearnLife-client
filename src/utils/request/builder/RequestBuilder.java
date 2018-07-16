@@ -1,5 +1,9 @@
 package utils.request.builder;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
 import org.json.JSONObject;
 import utils.Log;
 
@@ -19,6 +23,7 @@ public class RequestBuilder {
     private String requestMethod;
     private OnRequestFailListener onResponseFailListener;
     private OnRequestSuccessListener onResponseSuccessListener;
+    private JSONObject requestBodyParameterJson;
     private int connectTimeout = 1000;
     private int readTimeout = 1000;
 
@@ -31,6 +36,8 @@ public class RequestBuilder {
             JSONObject jsonObject = new JSONObject();
             if (!requestBodyParameters.isEmpty()) {
                 requestBodyParameters.forEach(jsonObject::put);
+            } else {
+                jsonObject = requestBodyParameterJson;
             }
             URL url = new URL(this.url);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
@@ -42,26 +49,26 @@ public class RequestBuilder {
                 requestProperties.forEach(con::addRequestProperty);
             con.setConnectTimeout(connectTimeout);
             con.setReadTimeout(readTimeout);
-            if (!this.requestMethod.equals("GET")) {
+            Log.i("sending " + con.getRequestMethod() + " to " + con.getURL());
+            if (this.requestMethod.equals("POST") || this.requestMethod.equals("PUT")) {
                 con.setDoOutput(true);
                 OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
                 wr.write(jsonObject.toString());
                 wr.flush();
+                Log.i("with json parameter :\n" + prettify(jsonObject.toString()));
             }
             StringBuffer content;
-            Log.i("sending " + con.getRequestMethod() + " to " + con.getURL());
             int errCode = con.getResponseCode();
             if (errCode == 200 || errCode == 201) {
                 content = readResponse(con.getInputStream());
-                Log.i(con.getRequestMethod() + " to " + con.getURL() + " succeed : " + errCode);
                 assert content != null;
-                Log.i(content.toString());
+                Log.i(con.getRequestMethod() + " to " + con.getURL() + " succeed : " + errCode + "\n" + prettify(content.toString()));
                 onResponseSuccessListener.onRequestSuccess(content == null ? ERR_READING_RESPONSE : content.toString());
             } else if ((errCode = con.getResponseCode()) != 200) {
-                Log.i(con.getRequestMethod() + " to " + con.getURL() + " failed : " + errCode);
+                Log.e(con.getRequestMethod() + " to " + con.getURL() + " failed : " + errCode);
                 content = readResponse(con.getErrorStream());
                 assert content != null;
-                Log.i(content.toString());
+                Log.e(content.toString());
                 onResponseFailListener.onRequestFail(errCode, content == null ? ERR_UNKNOWN : content.toString());
             } else
             con.disconnect();
@@ -128,5 +135,17 @@ public class RequestBuilder {
     public RequestBuilder setReadTimeout(int readTimeout) {
         this.readTimeout = readTimeout;
         return this;
+    }
+
+    public RequestBuilder setRequestBodyParameterJson(JSONObject requestBodyParameterJson) {
+        this.requestBodyParameterJson = requestBodyParameterJson;
+        return this;
+    }
+
+    private String prettify(String entry) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        JsonParser jp = new JsonParser();
+        JsonElement je = jp.parse(entry);
+        return gson.toJson(je);
     }
 }

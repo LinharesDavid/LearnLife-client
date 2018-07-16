@@ -1,8 +1,13 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+
+import static utils.Constants.*;
 
 public class Challenge {
+    private String _id;
     private String name;
     private String details;
     private String imageUrl;
@@ -10,12 +15,13 @@ public class Challenge {
     private String startDate;
     private String endDate;
     private int duration;
-    private ArrayList<Tag> tags;
-    private ArrayList<Badge> badges;
-    private User user;
+    private ArrayList<String> tags;
+    private ArrayList<String> badges;
+    private String user;
     private int verified;
+    private String rawJson;
 
-    public Challenge(String name, String details, String imageUrl, int pointsGiven, String startDate, String endDate, int duration, ArrayList<Tag> tags, ArrayList<Badge> badges, User user, int verified) {
+    public Challenge(String name, String details, String imageUrl, int pointsGiven, String startDate, String endDate, int duration, ArrayList<String> tags, ArrayList<String> badges, String user, int verified) {
         this.name = name;
         this.details = details;
         this.imageUrl = imageUrl;
@@ -27,6 +33,36 @@ public class Challenge {
         this.badges = badges;
         this.user = user;
         this.verified = verified;
+    }
+
+    @SuppressWarnings("unchecked cast")
+    public Challenge(HashMap<String, Object> map) {
+        if (map != null) {
+            this._id = map.get(JSON_ENTRY_KEY_ID) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_ID);
+            this.name = map.get(JSON_ENTRY_KEY_CHALLENGE_NAME) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_NAME);
+            this.details = map.get(JSON_ENTRY_KEY_CHALLENGE_DETAILS) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_DETAILS);
+            this.imageUrl = map.get(JSON_ENTRY_KEY_CHALLENGE_IMAGE_URL) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_IMAGE_URL);
+            this.pointsGiven = map.get(JSON_ENTRY_KEY_CHALLENGE_POINTS_GIVEN) == null ? -1: (int) map.get(JSON_ENTRY_KEY_CHALLENGE_POINTS_GIVEN);
+            this.startDate = map.get(JSON_ENTRY_KEY_CHALLENGE_START_DATE) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_START_DATE);
+            this.endDate = map.get(JSON_ENTRY_KEY_CHALLENGE_END_DATE) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_END_DATE);
+            this.duration = map.get(JSON_ENTRY_KEY_CHALLENGE_DURATION) == null ? -1 : (int) map.get(JSON_ENTRY_KEY_CHALLENGE_DURATION);
+            this.tags = new ArrayList<>();
+            this.tags = map.get(JSON_ENTRY_KEY_CHALLENGE_TAGS) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(JSON_ENTRY_KEY_CHALLENGE_TAGS);
+            this.badges = new ArrayList<>();
+            this.badges = map.get(JSON_ENTRY_KEY_CHALLENGE_BADGE) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(JSON_ENTRY_KEY_CHALLENGE_BADGE);
+            this.user = map.get(JSON_ENTRY_KEY_RAW_JSON) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_RAW_JSON);
+            this.verified = map.get(JSON_ENTRY_KEY_CHALLENGE_VERIFIED) == null ? -1 : (int) map.get(JSON_ENTRY_KEY_CHALLENGE_VERIFIED);
+            this.rawJson = map.get(JSON_ENTRY_KEY_RAW_JSON) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_RAW_JSON);
+        }
+    }
+
+    public String get_id() {
+        return _id;
+    }
+
+    public Challenge set_id(String _id) {
+        this._id = _id;
+        return this;
     }
 
     public String getName() {
@@ -85,27 +121,27 @@ public class Challenge {
         this.duration = duration;
     }
 
-    public ArrayList<Tag> getTags() {
+    public ArrayList<String> getTags() {
         return tags;
     }
 
-    public void setTags(ArrayList<Tag> tags) {
+    public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
 
-    public ArrayList<Badge> getBadges() {
+    public ArrayList<String> getBadges() {
         return badges;
     }
 
-    public void setBadges(ArrayList<Badge> badges) {
+    public void setBadges(ArrayList<String> badges) {
         this.badges = badges;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(String user) {
         this.user = user;
     }
 
@@ -115,6 +151,15 @@ public class Challenge {
 
     public void setVerified(int verified) {
         this.verified = verified;
+    }
+
+    public String getRawJson() {
+        return rawJson;
+    }
+
+    public Challenge setRawJson(String rawJson) {
+        this.rawJson = rawJson;
+        return this;
     }
 
     @Override

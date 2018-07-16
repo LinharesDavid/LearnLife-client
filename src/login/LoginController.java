@@ -29,7 +29,7 @@ public class LoginController {
                 .setOnResponseFailListener((errCode, res) -> listener.onConnexionFailed(res))
                 .setOnResponseSuccessListener(response -> {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.getJSONObject("user").getInt("role") == 1) {
+                    if (jsonObject.getJSONObject(MODEL_NAME_USER).getInt(JSON_ENTRY_KEY_USER_ROLE) == 1) {
                         Session.getInstance().setToken(jsonObject.getString(RESPONSE_FIELD_TOKEN));
                         listener.onConnexionSuccess();
                     } else {

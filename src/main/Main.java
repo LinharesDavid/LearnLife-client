@@ -19,7 +19,7 @@ public class Main extends Application implements OnCloseLoginListener{
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("sample.fxml"));
+        loader.setLocation(getClass().getResource("main_window.fxml"));
         Parent root = loader.load();
         mainController = loader.getController();
         primaryStage.setTitle(MAIN_WINDOW_TITLE);
