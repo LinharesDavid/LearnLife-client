@@ -1,6 +1,7 @@
 package service;
 
 import model.User;
+import org.json.JSONArray;
 import popup.PopupView;
 import utils.Log;
 import utils.request.builder.OnRequestFailListener;
@@ -31,7 +32,7 @@ public class UserService {
                 .build();
     }
 
-    public static void addUser(String email, String pwd, String firstname, String lastname, int role, OnRequestSuccessListener successListener, OnRequestFailListener failListener){
+    public static void addUser(String email, String pwd, String firstname, String lastname, int role, JSONArray tagd, JSONArray badges, OnRequestSuccessListener successListener, OnRequestFailListener failListener){
         RequestBuilder.builder()
                 .setUrl(BASE_URL + EXTENDED_URL_USERS)
                 .setRequestMethod("POST")
@@ -40,6 +41,28 @@ public class UserService {
                 .addRequestBodyParameter(BODY_PARAMETER_FIRSTNAME, firstname)
                 .addRequestBodyParameter(BODY_PARAMETER_LASTNAME, lastname)
                 .addRequestBodyParameter(BODY_PARAMETER_ROLE, role)
+                .setOnResponseSuccessListener(successListener)
+                .setOnResponseFailListener(failListener)
+                .build();
+    }
+
+    public void editUser(String email, String pwd, String firstname, String lastname, int role, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
+        RequestBuilder.builder()
+                .setUrl(BASE_URL + EXTENDED_URL_USERS)
+                .setRequestMethod("PUT")
+                .addRequestBodyParameter(BODY_PARAMETER_EMAIL, email)
+                .addRequestBodyParameter(BODY_PARAMETER_PASSWORD, pwd)
+                .addRequestBodyParameter(BODY_PARAMETER_FIRSTNAME, firstname)
+                .addRequestBodyParameter(BODY_PARAMETER_LASTNAME, lastname)
+                .addRequestBodyParameter(BODY_PARAMETER_ROLE, role)
+                .build();
+    }
+
+    public static void getUser(String id, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
+        RequestBuilder.builder()
+                .setUrl(BASE_URL + EXTENDED_URL_USERS + id)
+                .setRequestMethod("GET")
+                .addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON)
                 .setOnResponseSuccessListener(successListener)
                 .setOnResponseFailListener(failListener)
                 .build();
