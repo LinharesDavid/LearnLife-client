@@ -22,6 +22,16 @@ public class BadgeService {
                 .build();
     }
 
+    public static void deleteBadge(String badgeId, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
+        RequestBuilder.builder()
+                .setUrl(BASE_URL + EXTENDED_URL_BADGE + badgeId)
+                .setRequestMethod("DELETE")
+                .addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON)
+                .setOnResponseSuccessListener(successListener)
+                .setOnResponseFailListener(failListener)
+                .build();
+    }
+
     public static void addBadge(String name, String description, String image, int points, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
         RequestBuilder.builder()
                 .setUrl(BASE_URL + EXTENDED_URL_BADGE)

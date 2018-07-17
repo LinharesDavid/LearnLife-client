@@ -22,6 +22,16 @@ public class TagService {
                 .build();
     }
 
+    public static void deleteTag(String tagId, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
+        RequestBuilder.builder()
+                .setUrl(BASE_URL + EXTENDED_URL_TAG + tagId)
+                .setRequestMethod("DELETE")
+                .addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON)
+                .setOnResponseSuccessListener(successListener)
+                .setOnResponseFailListener(failListener)
+                .build();
+    }
+
     public static void addTag(String name, JSONArray tags, String category, OnRequestSuccessListener successListener, OnRequestFailListener failListener){
         RequestBuilder.builder()
                 .setUrl(BASE_URL + EXTENDED_URL_TAG)

@@ -19,4 +19,14 @@ public class ChallengeService {
                 .setOnResponseFailListener(failListener)
                 .build();
     }
+
+    public static void deleteChallenge(String challengeId, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
+        RequestBuilder.builder()
+                .setUrl(BASE_URL + EXTENDED_URL_CHALLENGE + challengeId)
+                .setRequestMethod("DELETE")
+                .addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON)
+                .setOnResponseSuccessListener(successListener)
+                .setOnResponseFailListener(failListener)
+                .build();
+    }
 }

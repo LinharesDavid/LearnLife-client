@@ -110,9 +110,35 @@ public class MainController {
                 if (selectedRow instanceof User) {
                     UserService.deleteUser(
                             ((User) selectedRow).get_id(),
-                            response -> refresh(User.class.getSimpleName()),
-                            null);
+                            response -> refresh(MODEL_NAME_USER),
+                            null
+                    );
+                } else if (selectedRow instanceof Tag) {
+                    TagService.deleteTag(
+                            ((Tag) selectedRow).get_id(),
+                            response -> refresh(MODEL_NAME_TAG),
+                            null
+                    );
+                } else if (selectedRow instanceof Badge) {
+                    BadgeService.deleteBadge(
+                            ((Badge) selectedRow).get_id(),
+                            response -> refresh(MODEL_NAME_BADGE),
+                            null
+                    );
+                } else if (selectedRow instanceof Challenge) {
+                    ChallengeService.deleteChallenge(
+                            ((Challenge) selectedRow).get_id(),
+                            response -> refresh(MODEL_NAME_CHALLENGE),
+                            null
+                    );
+                } else if (selectedRow instanceof Category) {
+                    CategoryService.deleteCategory(
+                            ((Category) selectedRow).get_id(),
+                            response -> refresh(MODEL_NAME_CATEGORY),
+                            null
+                    );
                 }
+
             });
             addElement.setOnAction(event -> {
                 AddView addView = new AddView();
@@ -136,11 +162,26 @@ public class MainController {
                         EditView editView = new EditView();
                         editView.start(selectedRow.getClass().getSimpleName(), ((User) selectedRow).getRawJson());
                         editView.setOnCloseEditWindowListener(() -> refresh(User.class.getSimpleName()));
-                    }
-                    if (selectedRow instanceof Tag) {
+
+                    } else if (selectedRow instanceof Tag) {
                         EditView editView = new EditView();
                         editView.start(selectedRow.getClass().getSimpleName(), ((Tag) selectedRow).getRawJson());
                         editView.setOnCloseEditWindowListener(() -> refresh(Tag.class.getSimpleName()));
+
+                    } else if (selectedRow instanceof Badge) {
+                        EditView editView = new EditView();
+                        editView.start(selectedRow.getClass().getSimpleName(), ((Badge) selectedRow).getRawJson());
+                        editView.setOnCloseEditWindowListener(() -> refresh(Badge.class.getSimpleName()));
+
+                    } else if (selectedRow instanceof Challenge) {
+                        EditView editView = new EditView();
+                        editView.start(selectedRow.getClass().getSimpleName(), ((Challenge) selectedRow).getRawJson());
+                        editView.setOnCloseEditWindowListener(() -> refresh(Challenge.class.getSimpleName()));
+
+                    } else if (selectedRow instanceof Category) {
+                        EditView editView = new EditView();
+                        editView.start(selectedRow.getClass().getSimpleName(), ((Category) selectedRow).getRawJson());
+                        editView.setOnCloseEditWindowListener(() -> refresh(Category.class.getSimpleName()));
                     }
                 }
             });
