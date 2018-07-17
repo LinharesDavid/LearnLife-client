@@ -1,24 +1,24 @@
 package add;
 
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import model.Badge;
 import model.Category;
 import model.Tag;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import popup.PopupView;
+import service.BadgeService;
 import service.CategoryService;
 import service.TagService;
 import service.UserService;
-import utils.Log;
-import utils.request.builder.RequestBuilder;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static utils.Constants.*;
 
@@ -31,24 +31,131 @@ public class AddController {
     public ComboBox cmb_user_role;
 
     public TextField txf_tag_name;
-    public TextField txf_tag_associated;
-    public ListView liv_tag_associated;
+    public TextField txf_tag_search;
+    public ListView liv_tag;
     public ComboBox cmb_tag_category;
+    public TextField txf_category_name;
+    public TextField txf_badge_name;
+    public TextArea txa_badge_description;
+    public TextField txf_badge_points;
+    public TextField txf_user_points;
+    public ListView liv_user_badge;
+    public TextField txf_badge_search;
 
     private AddView view;
 
     private ArrayList<Category> categories = null;
     private ArrayList<Tag> tags = null;
+    private ArrayList<Badge> badges = null;
+
+    public void initForUser() {
+        txf_user_points.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txf_user_points.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        initBadgeListView();
+        initTagListView();
+
+    }
+
+    public void initForTags() {
+        initCategoryCmb();
+        initTagListView();
+    }
+
+    private void initTagListView() {
+        if (tags == null) {
+            TagService.getAllTags(this::parseTags, null);
+        } else {
+            ObservableList<String> listViewData = FXCollections.observableArrayList();
+            for (Tag tag : tags) {
+                listViewData.add(tag.getName());
+            }
+            FilteredList<String> filteredData = new FilteredList<>(listViewData, s -> true);
+
+            setFilterTxtField(filteredData, txf_tag_search.textProperty(), txf_tag_search.getText());
+            liv_tag.setItems(filteredData);
+            liv_tag.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        }
+    }
+
+    private void initBadgeListView() {
+        if (badges == null) {
+            BadgeService.getAllBadges(this::parseBadges, null);
+        } else {
+            ObservableList<String> listViewData = FXCollections.observableArrayList();
+            for (Badge badge : badges) {
+                listViewData.add(badge.getName());
+            }
+            FilteredList<String> filteredData = new FilteredList<>(listViewData, s -> true);
+
+            setFilterTxtField(filteredData, txf_badge_search.textProperty(), txf_badge_search.getText());
+            liv_user_badge.setItems(filteredData);
+            liv_user_badge.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        }
+    }
+
+    private void setFilterTxtField(FilteredList<String> filteredData, StringProperty stringProperty, String text) {
+        stringProperty.addListener(obs -> {
+            String filter = text;
+            if (filter == null || filter.length() == 0) {
+                filteredData.setPredicate(s -> true);
+            } else {
+                filteredData.setPredicate(s -> s.contains(filter));
+            }
+        });
+    }
+
+    private void initCategoryCmb() {
+        if (categories == null) {
+            CategoryService.getAllCategories(this::parseCategories, null);
+        } else {
+            ObservableList<String> comboBoxData = FXCollections.observableArrayList();
+            for (Category category : categories) {
+                comboBoxData.add(category.getName());
+            }
+            cmb_tag_category.setItems(comboBoxData);
+        }
+    }
 
     @FXML
     private void onBtnValidateUserClick(ActionEvent event){
-        if (pwf_user_password.getText().isEmpty() || txf_user_email.getText().isEmpty() || txf_user_firstname.getText().isEmpty() || txf_user_lastname.getText().isEmpty()) {
+        if (pwf_user_password.getText().isEmpty() ||
+                txf_user_email.getText().isEmpty() ||
+                txf_user_firstname.getText().isEmpty() ||
+                txf_user_lastname.getText().isEmpty()) {
             PopupView popupView =new PopupView();
-            popupView.start("Erreur", "Tous les champs doivent\netre remplis", "OK");
+            popupView.start("Erreur", "You must fill\nevery fields", "OK");
             popupView.addOnBtnOkListener(null);
         } else {
             int role = cmb_user_role.getValue().equals("User") ? 0 : 1;
-            addUser(txf_user_email.getText(), pwf_user_password.getText(), txf_user_firstname.getText(), txf_user_lastname.getText(), role);
+
+            JSONArray badgeArray = new JSONArray();
+            for (Object o : liv_user_badge.getSelectionModel().getSelectedItems()) {
+                String name = (String) o;
+                for (Badge badge : badges) {
+                    if (badge.getName().equals(name)) {
+                        badgeArray.put(badge.get_id());
+                    }
+                }
+            }
+            JSONArray tagsArray = new JSONArray();
+            for (Object o : liv_tag.getSelectionModel().getSelectedItems()) {
+                String name = (String) o;
+                for (Tag tag : tags)
+                    if (tag.getName().equals(name)) {
+                        tagsArray.put(tag.get_id());
+                    }
+            }
+
+            addUser(txf_user_email.getText(),
+                    pwf_user_password.getText(),
+                    txf_user_firstname.getText(),
+                    txf_user_lastname.getText(),
+                    role,
+                    tagsArray,
+                    badgeArray);
         }
     }
 
@@ -61,13 +168,11 @@ public class AddController {
             popupView.addOnBtnOkListener(null);
         } else {
             JSONArray tagsArray = new JSONArray();
-            for (Object o : liv_tag_associated.getSelectionModel().getSelectedItems()) {
+            for (Object o : liv_tag.getSelectionModel().getSelectedItems()) {
                 String name = (String) o;
-                for (Tag tag : tags) {
-                    if (tag.getName().equals(name)) {
+                for (Tag tag : tags)
+                    if (tag.getName().equals(name))
                         tagsArray.put(tag.get_id());
-                    }
-                }
             }
             String selectedCategory = cmb_tag_category.getSelectionModel().getSelectedItem().toString();
             String selectedCategoryId = "";
@@ -83,36 +188,56 @@ public class AddController {
 
     @FXML
     private void onBtnUnselectAllClick(ActionEvent event) {
-        liv_tag_associated.getSelectionModel().clearSelection();
+        liv_tag.getSelectionModel().clearSelection();
     }
 
-    public void setUpTagLayout() {
-        if (tags == null || categories == null) {
-            getAllCategory();
+    @FXML
+    private void onBtnValidateCategoryClick(ActionEvent event) {
+        String name = txf_category_name.getText();
+        if (name.isEmpty()) {
+            PopupView popupView = new PopupView();
+            popupView.start("Erreur", "You must fill\nevery fields", "OK");
+            popupView.addOnBtnOkListener(null);
         } else {
-            ObservableList<String> listViewData = FXCollections.observableArrayList();
-            for (Tag tag : tags) {
-                listViewData.add(tag.getName());
-            }
-            FilteredList<String> filteredData = new FilteredList<>(listViewData, s -> true);
+            CategoryService.addCategory(
+                    name,
+                    response -> {
+                        view.onAddSuccess(MODEL_NAME_CATEGORY);
+                        view.closeWindow();
+                    },
+                    (errCode, res) -> {
+                        PopupView popupView = new PopupView();
+                        popupView.start("Error", "WOULA ca marche pas", "OK");
+                        popupView.addOnBtnOkListener(null);
+                    }
+            );
+        }
+    }
 
-            txf_tag_associated.textProperty().addListener(obs->{
-                String filter = txf_tag_associated.getText();
-                if(filter == null || filter.length() == 0) {
-                    filteredData.setPredicate(s -> true);
-                }
-                else {
-                    filteredData.setPredicate(s -> s.contains(filter));
-                }
-            });
-            liv_tag_associated.setItems(filteredData);
-            liv_tag_associated.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-
-            ObservableList<String> comboBoxData = FXCollections.observableArrayList();
-            for (Category category : categories) {
-                comboBoxData.add(category.getName());
-            }
-            cmb_tag_category.setItems(comboBoxData);
+    @FXML
+    private void onBtnValidateChallengeClick(ActionEvent event) {
+        if (txf_badge_name.getText().isEmpty() ||
+                txa_badge_description.getText().isEmpty() ||
+                txf_badge_points.getText().isEmpty()) {
+            PopupView popupView = new PopupView();
+            popupView.start("Erreur", "You must fill\nevery fields", "OK");
+            popupView.addOnBtnOkListener(null);
+        } else {
+            BadgeService.addBadge(
+                    txf_badge_name.getText(),
+                    txa_badge_description.getText(),
+                    "image",
+                    Integer.parseInt(txf_badge_points.getText()),
+                    response -> {
+                        view.onAddSuccess(MODEL_NAME_BADGE);
+                        view.closeWindow();
+                    },
+                    (errCode, res) -> {
+                        PopupView popupView = new PopupView();
+                        popupView.start("Error", "WOULA ca marche pas", "OK");
+                        popupView.addOnBtnOkListener(null);
+                    }
+            );
         }
     }
 
@@ -125,6 +250,14 @@ public class AddController {
         this.view = view;
     }
 
+    public void setTxf_badge_pointsNumbersOnly() {
+        txf_badge_points.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txf_badge_points.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+    }
+
     private void parseCategories(String res) {
         categories = new ArrayList<>();
         JSONArray jsonArrayCat = new JSONArray(res);
@@ -133,7 +266,7 @@ public class AddController {
             categories.add(new Category(jsonObjectCat.getString(JSON_ENTRY_KEY_ID),
                     jsonObjectCat.getString(JSON_ENTRY_KEY_CATEGORY_NAME)));
         }
-        getAllTag();
+        initCategoryCmb();
     }
 
     private void parseTags(String response) {
@@ -147,16 +280,30 @@ public class AddController {
 
             tags.add(tag);
         }
-        setUpTagLayout();
+        initTagListView();
     }
 
-    private void addUser(String email, String pwd, String firstname, String lastname, int role){
+    private void parseBadges(String res) {
+        badges = new ArrayList<>();
+        JSONArray jsonArrayBadges = new JSONArray(res);
+        for (int i = 0; i < jsonArrayBadges.length(); i++) {
+            JSONObject jsonObjectBadge = jsonArrayBadges.getJSONObject(i);
+            Badge badge = new Badge();
+            badge.setName(jsonObjectBadge.getString(JSON_ENTRY_KEY_BADGE_NAME));
+            badge.set_id(jsonObjectBadge.getString(JSON_ENTRY_KEY_ID));
+            badges.add(badge);
+        }
+    }
+
+    private void addUser(String email, String pwd, String firstname, String lastname, int role, JSONArray tags, JSONArray badge){
         UserService.addUser(
                 email,
                 pwd,
                 firstname,
                 lastname,
                 role,
+                tags,
+                badge,
                 response -> {
                     view.onAddSuccess(MODEL_NAME_USER);
                     view.closeWindow();
@@ -168,24 +315,6 @@ public class AddController {
                 }
 
         );
-//        RequestBuilder.builder()
-//                .setUrl(BASE_URL + EXTENDED_URL_USERS)
-//                .setRequestMethod("POST")
-//                .addRequestBodyParameter(BODY_PARAMETER_EMAIL, email)
-//                .addRequestBodyParameter(BODY_PARAMETER_PASSWORD, pwd)
-//                .addRequestBodyParameter(BODY_PARAMETER_FIRSTNAME, firstname)
-//                .addRequestBodyParameter(BODY_PARAMETER_LASTNAME, lastname)
-//                .addRequestBodyParameter(BODY_PARAMETER_ROLE, role)
-//                .setOnResponseSuccessListener(response -> {
-//                    view.onAddSuccess(MODEL_NAME_USER);
-//                    view.closeWindow();
-//                })
-//                .setOnResponseFailListener((errCode, res) -> {
-//                    PopupView popupView = new PopupView();
-//                    popupView.start("Error", "WOULA ca marche pas", "OK");
-//                    popupView.addOnBtnOkListener(null);
-//                })
-//                .build();
     }
 
     private void addTag(String name, JSONArray tags, String category) {
@@ -203,45 +332,14 @@ public class AddController {
                     popupView.addOnBtnOkListener(null);
                 }
         );
-
-//        RequestBuilder.builder()
-//                .setUrl(BASE_URL + EXTENDED_URL_TAG)
-//                .setRequestMethod("POST")
-//                .addRequestBodyParameter(BODY_PARAMETER_NAME, name)
-//                .addRequestBodyParameter(BODY_PARAMETER_TAG_ASSOCIATED, tags)
-//                .addRequestBodyParameter(BODY_PARAMETER_CATEGORY, category)
-//                .setOnResponseSuccessListener(response -> {
-//                    view.onAddSuccess(MODEL_NAME_TAG);
-//                    view.closeWindow();
-//                })
-//                .setOnResponseFailListener((errCode, res) -> {
-//                    PopupView popupView = new PopupView();
-//                    popupView.start("Error", "WOULA ca marche pas", "OK");
-//                    popupView.addOnBtnOkListener(null);
-//                })
-//                .build();
     }
 
     private void getAllCategory() {
         CategoryService.getAllCategories(this::parseCategories, null);
-//        RequestBuilder.builder()
-//                .setUrl(BASE_URL + EXTENDED_URL_CATEGORY)
-//                .setRequestMethod("GET")
-//                .addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON)
-//                .setOnResponseSuccessListener(this::parseCategories)
-//                .setOnResponseFailListener((errCode, response) -> System.out.println(errCode + " " + response))
-//                .build();
 
     }
 
     private void getAllTag() {
         TagService.getAllTags(this::parseTags, null);
-//        RequestBuilder.builder()
-//                .setUrl(BASE_URL + EXTENDED_URL_TAG)
-//                .setRequestMethod("GET")
-//                .addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON)
-//                .setOnResponseSuccessListener(this::parseTags)
-//                .setOnResponseFailListener((errCode, response) -> Log.d(String.valueOf(errCode), response))
-//                .build();
     }
 }

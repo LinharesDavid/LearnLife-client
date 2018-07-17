@@ -6,6 +6,8 @@ import utils.request.builder.OnRequestFailListener;
 import utils.request.builder.OnRequestSuccessListener;
 import utils.request.builder.RequestBuilder;
 
+import javax.security.auth.login.FailedLoginException;
+
 import static utils.Constants.*;
 
 public class BadgeService {
@@ -20,11 +22,14 @@ public class BadgeService {
                 .build();
     }
 
-    public static void editBadge(String user_id, JSONObject jsonObject, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
+    public static void addBadge(String name, String description, String image, int points, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
         RequestBuilder.builder()
-                .setUrl(BASE_URL + EXTENDED_URL_TAG + user_id)
-                .setRequestMethod("PUT")
-                .setRequestBodyParameterJson(jsonObject)
+                .setUrl(BASE_URL + EXTENDED_URL_BADGE)
+                .setRequestMethod("POST")
+                .addRequestBodyParameter(BODY_PARAMETER_NAME, name)
+                .addRequestBodyParameter(BODY_PARAMETER_DESCRIPTION, description)
+                .addRequestBodyParameter(BODY_PARAMETER_THUMBNAIL_URL, image)
+                .addRequestBodyParameter(BODY_PARAMETER_POINTS, points)
                 .setOnResponseSuccessListener(successListener)
                 .setOnResponseFailListener(failListener)
                 .build();

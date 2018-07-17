@@ -2,7 +2,7 @@ package utils;
 
 public final class Constants {
 
-    public static final String BASE_URL = "http://172.32.66.126:8080/";
+    public static final String BASE_URL = "http://192.168.1.29:8080/";
 
     public static final String MAIN_WINDOW_TITLE = "Learn Life";
 
@@ -22,6 +22,9 @@ public final class Constants {
     public static final String BODY_PARAMETER_NAME = "name";
     public static final String BODY_PARAMETER_CATEGORY = "category";
     public static final String BODY_PARAMETER_TAG_ASSOCIATED = "tagAssociated";
+    public static final String BODY_PARAMETER_THUMBNAIL_URL = "thumbnailUrl";
+    public static final String BODY_PARAMETER_DESCRIPTION = "description";
+    public static final String BODY_PARAMETER_POINTS = "achievementPoints";
 
 
     public static final String REQUEST_PROPERTY_CONTENT_TYPE ="Content-Type";

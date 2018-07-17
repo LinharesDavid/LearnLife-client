@@ -13,6 +13,8 @@ public class Badge {
     private int achievementPoints;
     private String rawJson;
 
+    public Badge() {}
+
     public Badge(String name, String description, String thumbnail, int achievementPoints) {
         this.name = name;
         this.description = description;

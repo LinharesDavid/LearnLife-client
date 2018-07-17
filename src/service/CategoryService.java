@@ -1,6 +1,5 @@
 package service;
 
-import model.Category;
 import utils.request.builder.OnRequestFailListener;
 import utils.request.builder.OnRequestSuccessListener;
 import utils.request.builder.RequestBuilder;
@@ -14,6 +13,16 @@ public class CategoryService {
                 .setUrl(BASE_URL + EXTENDED_URL_CATEGORY)
                 .setRequestMethod("GET")
                 .addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON)
+                .setOnResponseSuccessListener(successListener)
+                .setOnResponseFailListener(failListener)
+                .build();
+    }
+
+    public static void addCategory(String name, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
+        RequestBuilder.builder()
+                .setUrl(BASE_URL + EXTENDED_URL_CATEGORY)
+                .setRequestMethod("POST")
+                .addRequestBodyParameter(BODY_PARAMETER_NAME, name)
                 .setOnResponseSuccessListener(successListener)
                 .setOnResponseFailListener(failListener)
                 .build();

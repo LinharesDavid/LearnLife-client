@@ -15,6 +15,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import service.*;
+import utils.Log;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -27,6 +28,8 @@ import static utils.Constants.*;
 public class MainController {
     public TableView tableView;
     public ListView listView;
+
+    private String currentTable = MODEL_NAME_USER;
 
     private ArrayList<Object> values = new ArrayList<>();
 
@@ -47,28 +50,33 @@ public class MainController {
         listView.getSelectionModel().selectedItemProperty().addListener((ChangeListener<String>) (ov, oldvalue, newvalue) -> {
             switch (newvalue) {
                 case LEFT_PANNEL_TABLE_NAME_USER :
+                    currentTable = MODEL_NAME_USER;
                     tableView.getItems().remove(0, tableView.getItems().size());
-                    tableView.getColumns().removeAll();
+                    tableView.getColumns().remove(0, tableView.getItems().size());
                     refresh(User.class.getSimpleName());
                     break;
                 case LEFT_PANNEL_TABLE_NAME_TAG :
+                    currentTable = MODEL_NAME_TAG;
                     tableView.getItems().remove(0, tableView.getItems().size());
-                    tableView.getColumns().removeAll();
+                    tableView.getColumns().remove(0, tableView.getItems().size());
                     refresh(Tag.class.getSimpleName());
                     break;
                 case LEFT_PANNEL_TABLE_NAME_CHALLENGE :
+                    currentTable = MODEL_NAME_CHALLENGE;
                     tableView.getItems().remove(0, tableView.getItems().size());
-                    tableView.getColumns().removeAll();
+                    tableView.getColumns().remove(0, tableView.getItems().size());
                     refresh(Challenge.class.getSimpleName());
                     break;
                 case LEFT_PANNEL_TABLE_NAME_CATEGORY :
+                    currentTable = MODEL_NAME_CATEGORY;
                     tableView.getItems().remove(0, tableView.getItems().size());
-                    tableView.getColumns().removeAll();
+                    tableView.getColumns().remove(0, tableView.getItems().size());
                     refresh(Category.class.getSimpleName());
                     break;
                 case LEFT_PANNEL_TABLE_NAME_BADGE :
+                    currentTable = MODEL_NAME_BADGE;
                     tableView.getItems().remove(0, tableView.getItems().size());
-                    tableView.getColumns().removeAll();
+                    tableView.getColumns().remove(0, tableView.getColumns().size());
                     refresh(Badge.class.getSimpleName());
                     break;
             }
@@ -108,7 +116,7 @@ public class MainController {
             });
             addElement.setOnAction(event -> {
                 AddView addView = new AddView();
-                addView.start(objType.getSimpleName());
+                addView.start(currentTable);
                 addView.setOnCloseAddWindowListener(this::refresh);
             });
             tableContextMenu.getItems().addAll(deleteSelectedMenuItem, addElement);
@@ -192,7 +200,7 @@ public class MainController {
     private void refresh(String type) {
         values.clear();
         tableView.getItems().remove(0, tableView.getItems().size());
-        tableView.getColumns().removeAll();
+        tableView.getColumns().remove(0, tableView.getItems().size());
         switch (type.toLowerCase()) {
             case MODEL_NAME_USER:
                 UserService.getAllUsers(response -> parseResponse(response, User.class), null);
@@ -212,19 +220,4 @@ public class MainController {
                 break;
         }
     }
-
-
-    /*************************************
-     * All the dirty work
-     *************************************/
-
-    //Users
-    private void deleteUser(String id) {
-        UserService.deleteUser(id, null, null);
-        refresh(User.class.getSimpleName());
-    }
-
-    //Tag
-
-    //Challenge
 }
