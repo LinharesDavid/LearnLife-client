@@ -27,7 +27,7 @@ public class AddView {
             controller = loader.getController();
             controller.setView(this);
             if (type.toLowerCase().equals(MODEL_NAME_USER)) {
-                controller.initForUser();
+                controller.initForUser(stage);
             }
             if (type.toLowerCase().equals(Tag.class.getSimpleName().toLowerCase())) {
                 controller.initForTags();

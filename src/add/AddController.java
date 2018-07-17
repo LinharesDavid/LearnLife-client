@@ -1,12 +1,19 @@
 package add;
 
+import com.google.gson.JsonObject;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Badge;
 import model.Category;
 import model.Tag;
@@ -17,8 +24,15 @@ import service.BadgeService;
 import service.CategoryService;
 import service.TagService;
 import service.UserService;
+import utils.Log;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.BitSet;
 
 import static utils.Constants.*;
 
@@ -41,22 +55,59 @@ public class AddController {
     public TextField txf_user_points;
     public ListView liv_user_badge;
     public TextField txf_badge_search;
+    public ImageView imv_user_profile;
 
     private AddView view;
 
     private ArrayList<Category> categories = null;
     private ArrayList<Tag> tags = null;
     private ArrayList<Badge> badges = null;
+    private BufferedImage bufferedImage = null;
 
-    public void initForUser() {
-        txf_user_points.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txf_user_points.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        initBadgeListView();
-        initTagListView();
+    public void initForUser(Stage stage) {
+        try {
+            FileInputStream fileInputStream = new FileInputStream("res/default_image.jpg");
+            Image image = new Image(fileInputStream);
+            imv_user_profile.setImage(image);
+            txf_user_points.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (!newValue.matches("\\d*")) {
+                    txf_user_points.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            });
+            initBadgeListView();
+            initTagListView();
+            imv_user_profile.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+                FileChooser.ExtensionFilter imageFilter
+                        = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
 
+                FileChooser fc = new FileChooser();
+                fc.getExtensionFilters().add(imageFilter);
+                File newImage = fc.showOpenDialog(stage);
+                try {
+                    FileInputStream inputStream = new FileInputStream(newImage);
+                    Image img = new Image(inputStream);
+                    imv_user_profile.setImage(img);
+
+                    FileInputStream input = new FileInputStream(newImage);
+
+
+                    bufferedImage = ImageIO.read(input);
+
+
+                    File output = new File("c:/temp/image.bmp");
+
+
+                    ImageIO.write(bufferedImage, "bmp", output);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+            });
+        } catch (FileNotFoundException e) {
+        e.printStackTrace();
+    }
     }
 
     public void initForTags() {
@@ -305,6 +356,8 @@ public class AddController {
                 tags,
                 badge,
                 response -> {
+                    if (bufferedImage != null)
+                        addUserPicture(response);
                     view.onAddSuccess(MODEL_NAME_USER);
                     view.closeWindow();
                 },
@@ -315,6 +368,13 @@ public class AddController {
                 }
 
         );
+    }
+
+    private void addUserPicture(String response){
+        JSONObject jsonObject = new JSONObject(response);
+        String userId = jsonObject.getString(JSON_ENTRY_KEY_ID);
+
+        UserService.setUserImage(userId, bufferedImage);
     }
 
     private void addTag(String name, JSONArray tags, String category) {

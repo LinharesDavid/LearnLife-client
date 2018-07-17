@@ -8,6 +8,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
@@ -34,8 +35,8 @@
            <String fx:value="User" />
        </value>
    </ComboBox>
-   <Button mnemonicParsing="false" onAction="#onBtnValidateUserClick" text="Validate" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-   <Button mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" GridPane.rowIndex="6" />
+   <Button mnemonicParsing="false" onAction="#onBtnValidateUserClick" text="Validate" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+   <Button mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" GridPane.rowIndex="7" />
    <Label text="Badges :" GridPane.columnIndex="2" />
    <Label text="Points :" GridPane.rowIndex="5" />
    <TextField fx:id="txf_user_points" GridPane.columnIndex="1" GridPane.rowIndex="5" />
@@ -46,6 +47,8 @@
    <Button mnemonicParsing="false" text="Unselect" GridPane.columnIndex="4" GridPane.rowIndex="1" />
    <TextField fx:id="txf_tag_search" GridPane.columnIndex="5" />
    <TextField fx:id="txf_badge_search" GridPane.columnIndex="3" />
+   <Label text="Image :" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+   <ImageView fx:id="imv_user_profile" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -55,6 +58,7 @@
       <ColumnConstraints />
    </columnConstraints>
    <rowConstraints>
+      <RowConstraints />
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
