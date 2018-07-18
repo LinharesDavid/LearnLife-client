@@ -1,5 +1,8 @@
 package service;
 
+import model.Badge;
+import model.Tag;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import popup.PopupView;
 import utils.request.builder.OnRequestFailListener;
@@ -7,6 +10,8 @@ import utils.request.builder.OnRequestSuccessListener;
 import utils.request.builder.RequestBuilder;
 
 import javax.security.auth.login.FailedLoginException;
+
+import java.util.ArrayList;
 
 import static utils.Constants.*;
 
@@ -43,5 +48,19 @@ public class BadgeService {
                 .setOnResponseSuccessListener(successListener)
                 .setOnResponseFailListener(failListener)
                 .build();
+    }
+
+    public static ArrayList<Badge> parseBadges(String response) {
+        ArrayList<Badge> badges = new ArrayList<>();
+        JSONArray jsonArrayBadge = new JSONArray(response);
+        for (int i = 0; i < jsonArrayBadge.length(); i++) {
+            JSONObject jsonObjectBadge = jsonArrayBadge.getJSONObject(i);
+            Badge badge = new Badge();
+            badge.set_id(jsonObjectBadge.getString(JSON_ENTRY_KEY_ID));
+            badge.setName(jsonObjectBadge.getString(JSON_ENTRY_KEY_TAG_NAME));
+
+            badges.add(badge);
+        }
+        return badges;
     }
 }

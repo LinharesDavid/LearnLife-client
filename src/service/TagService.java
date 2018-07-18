@@ -2,11 +2,14 @@ package service;
 
 import model.Tag;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import popup.PopupView;
 import utils.Log;
 import utils.request.builder.OnRequestFailListener;
 import utils.request.builder.OnRequestSuccessListener;
 import utils.request.builder.RequestBuilder;
+
+import java.util.ArrayList;
 
 import static utils.Constants.*;
 
@@ -42,5 +45,19 @@ public class TagService {
                 .setOnResponseSuccessListener(successListener)
                 .setOnResponseFailListener(failListener)
                 .build();
+    }
+
+    public static ArrayList<Tag> parseTags(String response) {
+        ArrayList<Tag> tags = new ArrayList<>();
+        JSONArray jsonArrayTag = new JSONArray(response);
+        for (int i = 0; i < jsonArrayTag.length(); i++) {
+            JSONObject jsonObjectTag = jsonArrayTag.getJSONObject(i);
+            Tag tag = new Tag();
+            tag.set_id(jsonObjectTag.getString(JSON_ENTRY_KEY_ID));
+            tag.setName(jsonObjectTag.getString(JSON_ENTRY_KEY_TAG_NAME));
+
+            tags.add(tag);
+        }
+        return tags;
     }
 }

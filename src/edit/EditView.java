@@ -7,7 +7,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import static utils.Constants.ADD_ITEM_WINDOW_TITLE;
+import static utils.Constants.*;
 
 public class EditView {
 
@@ -19,14 +19,57 @@ public class EditView {
     public void start(String type, String json) {
         try {
             FXMLLoader loader = new FXMLLoader();
+            String filename = "../add/add_" + type.toLowerCase() + "_window.fxml";
+            loader.setLocation(getClass().getResource(filename));
+            GridPane rootLayout = loader.load();
+            stage.setTitle(EDIT_ITEM_WINDOW_TITLE + type);
+            scene = new Scene(rootLayout);
+            switch (type.toLowerCase()) {
+                case MODEL_NAME_CATEGORY:
+                    controller = new EditCategoryController();
+                    loader.setController(controller);
+                    ((EditCategoryController) controller).init(scene, json);
+                    controller.setView(this);
+                    break;
+                case MODEL_NAME_TAG:
+                    controller = new EditTagController();
+                    loader.setController(controller);
+                    ((EditTagController) controller).init(scene, json);
+                    controller.setView(this);
+                    break;
+                case MODEL_NAME_USER:
+                    controller = new EditUserController();
+                    loader.setController(controller);
+                    ((EditUserController) controller).init(scene, json);
+                    controller.setView(this);
+                    break;
+                case MODEL_NAME_BADGE:
+                    controller = new EditBadgeController();
+                    loader.setController(controller);
+                    ((EditBadgeController) controller).init(scene, json);
+                    controller.setView(this);
+                    break;
+            }
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setScene(scene);
+            stage.initStyle(StageStyle.UTILITY);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void start(String json) {
+        try {
+            FXMLLoader loader = new FXMLLoader();
             String filename = "edit_window.fxml";
             loader.setLocation(getClass().getResource(filename));
             GridPane rootLayout = loader.load();
+            stage.setTitle("Json");
+            scene = new Scene(rootLayout);
             controller = loader.getController();
             controller.setView(this);
-            controller.setJsonText(json, type);
-            stage.setTitle(ADD_ITEM_WINDOW_TITLE + type);
-            scene = new Scene(rootLayout);
+            controller.setJsonText(json);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.initStyle(StageStyle.UTILITY);

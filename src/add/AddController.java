@@ -1,5 +1,6 @@
 package add;
 
+import edit.EditController;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -97,14 +98,7 @@ public class AddController {
     }
 
     private void setFilterTxtField(FilteredList<String> filteredData, StringProperty stringProperty, String text) {
-        stringProperty.addListener(obs -> {
-            String filter = text;
-            if (filter == null || filter.length() == 0) {
-                filteredData.setPredicate(s -> true);
-            } else {
-                filteredData.setPredicate(s -> s.contains(filter));
-            }
-        });
+        EditController.setTextFieldFilterForListView(filteredData, stringProperty, text);
     }
 
     private void initCategoryCmb() {
@@ -270,16 +264,7 @@ public class AddController {
     }
 
     private void parseTags(String response) {
-        tags = new ArrayList<>();
-        JSONArray jsonArrayCat = new JSONArray(response);
-        for (int i = 0; i < jsonArrayCat.length(); i++) {
-            JSONObject jsonObjectCat = jsonArrayCat.getJSONObject(i);
-            Tag tag = new Tag();
-            tag.set_id(jsonObjectCat.getString(JSON_ENTRY_KEY_ID));
-            tag.setName(jsonObjectCat.getString(JSON_ENTRY_KEY_TAG_NAME));
-
-            tags.add(tag);
-        }
+        tags = TagService.parseTags(response);
         initTagListView();
     }
 

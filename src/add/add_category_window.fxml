@@ -21,7 +21,7 @@
    <children>
       <Label text="Name :" />
       <TextField fx:id="txf_category_name" GridPane.columnIndex="1" />
-      <Button mnemonicParsing="false" text="Validate" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" onAction="#onBtnValidateCategoryClick" />
-      <Button mnemonicParsing="false" text="Cancel" GridPane.halignment="LEFT" GridPane.rowIndex="2" onAction="#onBtnCancelClick" />
+      <Button fx:id="btn_validate" mnemonicParsing="false" text="Validate" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" onAction="#onBtnValidateCategoryClick" />
+      <Button fx:id="btn_cancel" mnemonicParsing="false" text="Cancel" GridPane.halignment="LEFT" GridPane.rowIndex="2" onAction="#onBtnCancelClick" />
    </children>
 </GridPane>

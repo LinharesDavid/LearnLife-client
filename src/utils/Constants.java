@@ -88,6 +88,7 @@ public final class Constants {
     public static final int NO_VALUE_FOR_THIS_KEY_INT = -1;
 
     public static final String ADD_ITEM_WINDOW_TITLE = "Add ";
+    public static final String EDIT_ITEM_WINDOW_TITLE = "Edit ";
 
     public static final String LEFT_PANNEL_TABLE_NAME_BADGE = "Badges";
     public static final String LEFT_PANNEL_TABLE_NAME_CATEGORY = "Categories";

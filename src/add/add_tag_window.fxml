@@ -15,12 +15,12 @@
     <Label text="Tag Associated :" GridPane.rowIndex="1" />
     <Label text="Category :" GridPane.rowIndex="3" />
     <TextField fx:id="txf_tag_name" GridPane.columnIndex="1" />
-    <Button mnemonicParsing="false" onAction="#onBtnValidateTagClick" text="Validate" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
-    <Button mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" GridPane.rowIndex="6" />
+    <Button fx:id="btn_validate" mnemonicParsing="false" onAction="#onBtnValidateTagClick" text="Validate" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+    <Button fx:id="btn_cancel" mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" GridPane.rowIndex="6" />
    <TextField fx:id="txf_tag_search" GridPane.columnIndex="1" GridPane.rowIndex="1" />
    <ListView fx:id="liv_tag" prefHeight="322.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
     <ComboBox fx:id="cmb_tag_category" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-   <Button mnemonicParsing="false" onAction="#onBtnUnselectAllClick" text="Unselect all" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+   <Button fx:id="btn_unselect" mnemonicParsing="false" onAction="#onBtnUnselectAllClick" text="Unselect all" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
