@@ -29,27 +29,24 @@ public class EditView {
                     controller = new EditCategoryController();
                     loader.setController(controller);
                     ((EditCategoryController) controller).init(scene, json);
-                    controller.setView(this);
                     break;
                 case MODEL_NAME_TAG:
                     controller = new EditTagController();
                     loader.setController(controller);
                     ((EditTagController) controller).init(scene, json);
-                    controller.setView(this);
                     break;
                 case MODEL_NAME_USER:
                     controller = new EditUserController();
                     loader.setController(controller);
                     ((EditUserController) controller).init(scene, json);
-                    controller.setView(this);
                     break;
                 case MODEL_NAME_BADGE:
                     controller = new EditBadgeController();
                     loader.setController(controller);
                     ((EditBadgeController) controller).init(scene, json);
-                    controller.setView(this);
                     break;
             }
+            controller.setView(this);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.initStyle(StageStyle.UTILITY);

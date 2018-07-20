@@ -6,8 +6,6 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.Badge;
-import model.Tag;
 
 import static utils.Constants.*;
 
@@ -25,18 +23,24 @@ public class AddView {
             loader.setLocation(getClass().getResource(filename));
             GridPane rootLayout = loader.load();
             controller = loader.getController();
-            controller.setView(this);
-            if (type.toLowerCase().equals(MODEL_NAME_USER)) {
-                controller.initForUser();
-            }
-            if (type.toLowerCase().equals(Tag.class.getSimpleName().toLowerCase())) {
-                controller.initForTags();
-            }
-            if (type.toLowerCase().equals(Badge.class.getSimpleName().toLowerCase())) {
-                controller.setTxf_badge_pointsNumbersOnly();
-            }
-            stage.setTitle(ADD_ITEM_WINDOW_TITLE + type);
             scene = new Scene(rootLayout);
+            switch (type.toLowerCase()) {
+                case MODEL_NAME_USER:
+                    ((AddUserController) controller).init(scene);
+                    break;
+                case MODEL_NAME_TAG:
+                    ((AddTagController) controller).init(scene);
+                    break;
+                case MODEL_NAME_BADGE:
+                    ((AddBadgeController) controller).init(scene);
+                    break;
+                case MODEL_NAME_CATEGORY:
+                    ((AddCategoryController) controller).init(scene);
+                case MODEL_NAME_CHALLENGE:
+                    ((AddChallengeController) controller).init(scene);
+            }
+            controller.setView(this);
+            stage.setTitle(ADD_ITEM_WINDOW_TITLE + type);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.setScene(scene);
             stage.initStyle(StageStyle.UTILITY);

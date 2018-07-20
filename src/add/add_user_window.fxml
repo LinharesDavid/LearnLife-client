@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane alignment="CENTER" hgap="10" prefHeight="344.0" prefWidth="876.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddController">
+<GridPane alignment="CENTER" hgap="10" prefHeight="344.0" prefWidth="876.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddUserController">
 
    <Label text="Email :" />
    <Label text="Password :" GridPane.rowIndex="1" />
@@ -34,12 +34,12 @@
            <String fx:value="User" />
        </value>
    </ComboBox>
-   <Button fx:id="btn_validate" mnemonicParsing="false" onAction="#onBtnValidateUserClick" text="Validate" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
+   <Button fx:id="btn_validate" mnemonicParsing="false" onAction="#onBtnValidateClick" text="Validate" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
    <Button fx:id="btn_cancel" mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" GridPane.rowIndex="6" />
    <Label text="Badges :" GridPane.columnIndex="2" />
    <Label text="Points :" GridPane.rowIndex="5" />
    <TextField fx:id="txf_user_points" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-   <ListView fx:id="liv_user_badge" prefHeight="91.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="5" />
+   <ListView fx:id="liv_badge" prefHeight="91.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="5" />
    <Button fx:id="btn_unselect_badges" mnemonicParsing="false" text="Unselect" GridPane.columnIndex="2" GridPane.rowIndex="1" />
    <Label text="Tags :" GridPane.columnIndex="4" />
    <ListView fx:id="liv_tag" prefHeight="84.0" prefWidth="176.0" GridPane.columnIndex="5" GridPane.rowIndex="1" GridPane.rowSpan="5" />

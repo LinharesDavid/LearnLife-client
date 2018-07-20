@@ -29,7 +29,7 @@ public class EditCategoryController extends EditController {
         btn_cancel.setOnAction(this::onBtnCancelClick);
     }
 
-    private void onBtnValidateClick(ActionEvent event){
+    private void onBtnValidateClick(ActionEvent event) {
         JSONObject newCategory = new JSONObject();
         newCategory.put(JSON_ENTRY_KEY_ID, oldCategory.getString(JSON_ENTRY_KEY_ID));
         newCategory.put(JSON_ENTRY_KEY_CATEGORY_NAME, txf_category_name.getText());

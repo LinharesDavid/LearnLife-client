@@ -48,7 +48,7 @@ public class EditUserController extends EditController {
         txf_badge_search = (TextField) scene.lookup("#txf_badge_search");
         pwf_user_password = (PasswordField) scene.lookup("#pwf_user_password");
         liv_tag = (ListView) scene.lookup("#liv_tag");
-        liv_user_badge = (ListView) scene.lookup("#liv_user_badge");
+        liv_user_badge = (ListView) scene.lookup("#liv_badge");
         cmb_user_role = (ComboBox) scene.lookup("#cmb_user_role");
         btn_validate = (Button) scene.lookup("#btn_validate");
         btn_cancel = (Button) scene.lookup("#btn_cancel");
