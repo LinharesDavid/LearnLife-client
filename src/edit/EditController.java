@@ -10,17 +10,25 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import model.Badge;
+import model.Category;
 import model.Tag;
 import popup.PopupView;
 import service.BadgeService;
 import service.OtherService;
 import service.TagService;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 public class EditController {
@@ -31,15 +39,13 @@ public class EditController {
 
     protected ArrayList<Tag> tags;
     protected ArrayList<Badge> badges;
+    ArrayList<Category> categories;
+    File newImage = null;
 
-    @FXML
-    private void onBtnValidateClick(ActionEvent event){
-        if (txaJsonEdit.getText().equals(prettyJson)) {
-            view.closeWindow();
-        } else {
-            //editModel(txaJsonEdit.getText());
-        }
-    }
+    ListView liv_badge;
+    ListView liv_tag;
+    TextField txf_badge_search;
+    TextField txf_tag_search;
 
     @FXML
     protected void onBtnCancelClick(ActionEvent event) {
@@ -59,7 +65,7 @@ public class EditController {
         txaJsonEdit.setText(prettyJsonString);
     }
 
-    protected void editModel(String json, String type) {
+    void editModel(String json, String type) {
         OtherService.editModel(
                 json,
                 type,
@@ -79,7 +85,7 @@ public class EditController {
         );
     }
 
-    void initTagListView(TextField textField, String oldTags, ListView liv_tag) {
+    void initTagListView(String oldTags) {
         if (tags == null) {
             TagService.getAllTags(response -> tags = TagService.parseTags(response), null);
         }
@@ -89,7 +95,14 @@ public class EditController {
         }
         FilteredList<String> filteredData = new FilteredList<>(listViewData, s -> true);
 
-        setFilterTxtField(filteredData, textField.textProperty(), textField.getText());
+        txf_tag_search.textProperty().addListener(obs -> {
+            String filter = txf_tag_search.getText();
+            if (filter == null || filter.length() == 0) {
+                filteredData.setPredicate(s -> true);
+            } else {
+                filteredData.setPredicate(s -> s.contains(filter));
+            }
+        });
 
         liv_tag.setItems(filteredData);
         liv_tag.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -100,7 +113,7 @@ public class EditController {
 
     }
 
-    void initBadgeListView(TextField textField, String oldTags, ListView liv_badge) {
+    void initBadgeListView(String oldTags) {
         if (badges == null) {
             BadgeService.getAllBadges(response -> badges = BadgeService.parseBadges(response), null);
         }
@@ -110,7 +123,14 @@ public class EditController {
         }
         FilteredList<String> filteredData = new FilteredList<>(listViewData, s -> true);
 
-        setFilterTxtField(filteredData, textField.textProperty(), textField.getText());
+        txf_badge_search.textProperty().addListener(obs -> {
+            String filter = txf_badge_search.getText();
+            if (filter == null || filter.length() == 0) {
+                filteredData.setPredicate(s -> true);
+            } else {
+                filteredData.setPredicate(s -> s.contains(filter));
+            }
+        });
 
         liv_badge.setItems(filteredData);
         liv_badge.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -121,18 +141,33 @@ public class EditController {
 
     }
 
-    private void setFilterTxtField(FilteredList<String> filteredData, StringProperty stringProperty, String text) {
-        setTextFieldFilterForListView(filteredData, stringProperty, text);
+    void setTxfNumbersOnly(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
     }
 
-    public static void setTextFieldFilterForListView(FilteredList<String> filteredData, StringProperty stringProperty, String text) {
-        stringProperty.addListener(obs -> {
-            String filter = text;
-            if (filter == null || filter.length() == 0) {
-                filteredData.setPredicate(s -> true);
-            } else {
-                filteredData.setPredicate(s -> s.contains(filter));
+    void initImv(Scene scene, ImageView imageView) {
+        imageView.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+            FileChooser.ExtensionFilter imageFilter
+                    = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+
+            FileChooser fc = new FileChooser();
+            fc.getExtensionFilters().add(imageFilter);
+            newImage = fc.showOpenDialog(scene.getWindow());
+            try {
+                FileInputStream inputStream = new FileInputStream(newImage);
+                Image img = new Image(inputStream);
+                imageView.setImage(img);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
+
+
         });
     }
 }

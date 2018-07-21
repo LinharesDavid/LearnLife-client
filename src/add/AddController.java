@@ -7,16 +7,24 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.FileChooser;
 import model.Badge;
 import model.Category;
 import model.Tag;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import popup.PopupView;
 import service.BadgeService;
 import service.CategoryService;
 import service.TagService;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import static utils.Constants.*;
@@ -45,42 +53,7 @@ public class AddController {
     ArrayList<Category> categories = null;
     ArrayList<Tag> tags = null;
     ArrayList<Badge> badges = null;
-
-    void initTagListView() {
-        if (tags == null) {
-            TagService.getAllTags(this::parseTags, null);
-        } else {
-            ObservableList<String> listViewData = FXCollections.observableArrayList();
-            for (Tag tag : tags) {
-                listViewData.add(tag.getName());
-            }
-            FilteredList<String> filteredData = new FilteredList<>(listViewData, s -> true);
-
-            setFilterTxtField(filteredData, txf_tag_search.textProperty(), txf_tag_search.getText());
-            liv_tag.setItems(filteredData);
-            liv_tag.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        }
-    }
-
-    void initBadgeListView() {
-        if (badges == null) {
-            BadgeService.getAllBadges(this::parseBadges, null);
-        } else {
-            ObservableList<String> listViewData = FXCollections.observableArrayList();
-            for (Badge badge : badges) {
-                listViewData.add(badge.getName());
-            }
-            FilteredList<String> filteredData = new FilteredList<>(listViewData, s -> true);
-
-            setFilterTxtField(filteredData, txf_badge_search.textProperty(), txf_badge_search.getText());
-            liv_badge.setItems(filteredData);
-            liv_badge.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        }
-    }
-
-    private void setFilterTxtField(FilteredList<String> filteredData, StringProperty stringProperty, String text) {
-        EditController.setTextFieldFilterForListView(filteredData, stringProperty, text);
-    }
+    File newImage = null;
 
     void initCategoryCmb() {
         if (categories == null) {
@@ -92,11 +65,6 @@ public class AddController {
             }
             cmb_tag_category.setItems(comboBoxData);
         }
-    }
-
-    @FXML
-    private void onBtnUnselectAllClick(ActionEvent event) {
-        liv_tag.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -127,27 +95,9 @@ public class AddController {
         initCategoryCmb();
     }
 
-    private void parseTags(String response) {
-        tags = TagService.parseTags(response);
-        initTagListView();
-    }
-
-    private void parseBadges(String res) {
-        badges = new ArrayList<>();
-        JSONArray jsonArrayBadges = new JSONArray(res);
-        for (int i = 0; i < jsonArrayBadges.length(); i++) {
-            JSONObject jsonObjectBadge = jsonArrayBadges.getJSONObject(i);
-            Badge badge = new Badge();
-            badge.setName(jsonObjectBadge.getString(JSON_ENTRY_KEY_BADGE_NAME));
-            badge.set_id(jsonObjectBadge.getString(JSON_ENTRY_KEY_ID));
-            badges.add(badge);
-        }
-        initBadgeListView();
-    }
-
-    JSONArray getBadgesArray() {
+    JSONArray getBadgesArray(ListView listView) {
         JSONArray badgeArray = new JSONArray();
-        for (Object o : liv_badge.getSelectionModel().getSelectedItems()) {
+        for (Object o : listView.getSelectionModel().getSelectedItems()) {
             String name = (String) o;
             for (Badge badge : badges) {
                 if (badge.getName().equals(name)) {
@@ -158,9 +108,9 @@ public class AddController {
         return badgeArray;
     }
 
-    JSONArray getTagsArray() {
+    JSONArray getTagsArray(ListView listView) {
         JSONArray tagsArray = new JSONArray();
-        for (Object o : liv_tag.getSelectionModel().getSelectedItems()) {
+        for (Object o : listView.getSelectionModel().getSelectedItems()) {
             String name = (String) o;
             for (Tag tag : tags) {
                 if (tag.getName().equals(name)) {
@@ -169,5 +119,82 @@ public class AddController {
             }
         }
         return tagsArray;
+    }
+
+    void initImv(Scene scene, ImageView imageView) {
+        imageView.setImage(new Image("res/default-image.jpg"));
+        imageView.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
+            FileChooser.ExtensionFilter imageFilter
+                    = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+
+            FileChooser fc = new FileChooser();
+            fc.getExtensionFilters().add(imageFilter);
+            newImage = fc.showOpenDialog(scene.getWindow());
+            try {
+                FileInputStream inputStream = new FileInputStream(newImage);
+                Image img = new Image(inputStream);
+                imageView.setImage(img);
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+
+        });
+    }
+
+    void showErorPopup() {
+        PopupView popupView = new PopupView();
+        popupView.start("Error", "WOULA ca marche pas", "OK");
+        popupView.addOnBtnOkListener(null);
+    }
+
+    void initTagListView() {
+        if (tags == null) {
+            TagService.getAllTags(response -> tags = TagService.parseTags(response), null);
+        }
+        ObservableList<String> listViewData = FXCollections.observableArrayList();
+        for (Tag tag : tags) {
+            listViewData.add(tag.getName());
+        }
+        FilteredList<String> filteredData = new FilteredList<>(listViewData, s -> true);
+
+        txf_tag_search.textProperty().addListener(obs -> {
+            String filter = txf_tag_search.getText();
+            if (filter == null || filter.length() == 0) {
+                filteredData.setPredicate(s -> true);
+            } else {
+                filteredData.setPredicate(s -> s.contains(filter));
+            }
+        });
+
+        liv_tag.setItems(filteredData);
+        liv_tag.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+    }
+
+    void initBadgeListView() {
+        if (badges == null) {
+            BadgeService.getAllBadges(response -> badges = BadgeService.parseBadges(response), null);
+        }
+        ObservableList<String> listViewData = FXCollections.observableArrayList();
+        for (Badge badge : badges) {
+            listViewData.add(badge.getName());
+        }
+        FilteredList<String> filteredData = new FilteredList<>(listViewData, s -> true);
+
+        txf_badge_search.textProperty().addListener(obs -> {
+            String filter = txf_badge_search.getText();
+            if (filter == null || filter.length() == 0) {
+                filteredData.setPredicate(s -> true);
+            } else {
+                filteredData.setPredicate(s -> s.contains(filter));
+            }
+        });
+
+        liv_badge.setItems(filteredData);
+        liv_badge.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
     }
 }

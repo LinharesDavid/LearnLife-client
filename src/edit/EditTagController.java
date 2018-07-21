@@ -21,8 +21,6 @@ import static utils.Constants.*;
 public class EditTagController extends EditController {
 
     private JSONObject oldTag;
-    private ArrayList<Tag> tags = null;
-    private ArrayList<Category> categories = null;
 
     private ListView liv_tag;
     private TextField txf_tag_name;

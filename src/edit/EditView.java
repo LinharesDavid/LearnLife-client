@@ -45,6 +45,10 @@ public class EditView {
                     loader.setController(controller);
                     ((EditBadgeController) controller).init(scene, json);
                     break;
+                case MODEL_NAME_CHALLENGE:
+                    controller = new EditChallengeController();
+                    loader.setController(controller);
+                    ((EditChallengeController) controller).init(scene, json);
             }
             controller.setView(this);
             stage.initModality(Modality.APPLICATION_MODAL);

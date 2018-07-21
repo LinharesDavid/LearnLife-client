@@ -37,11 +37,7 @@ public class AddCategoryController extends AddController {
                         view.onAddSuccess(MODEL_NAME_CATEGORY);
                         view.closeWindow();
                     },
-                    (errCode, res) -> {
-                        PopupView popupView = new PopupView();
-                        popupView.start("Error", "WOULA ca marche pas", "OK");
-                        popupView.addOnBtnOkListener(null);
-                    }
+                    (errCode, res) -> showErorPopup()
             );
         }
     }

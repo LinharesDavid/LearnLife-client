@@ -3,17 +3,30 @@ package add;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import model.Badge;
 import model.Tag;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import popup.PopupView;
 import service.UserService;
+import utils.Log;
 
+import java.awt.image.BufferedImage;
 
+import static utils.Constants.JSON_ENTRY_KEY_ID;
 import static utils.Constants.MODEL_NAME_USER;
 
 public class AddUserController extends AddController {
 
+
+    @FXML
+    private ImageView imv_user;
+
+
+    private BufferedImage bufferedImage = null;
 
     public void init(Scene scene) {
         txf_user_points.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -21,8 +34,10 @@ public class AddUserController extends AddController {
                 txf_user_points.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
+
         initBadgeListView();
         initTagListView();
+        initImv(scene, imv_user);
     }
 
     @FXML
@@ -65,14 +80,14 @@ public class AddUserController extends AddController {
                     tagsArray,
                     badgeArray,
                     response -> {
+                        if (newImage != null) {
+                            JSONObject userJson = new JSONObject(response);
+                            UserService.setUserImage(userJson.getString(JSON_ENTRY_KEY_ID), newImage);
+                        }
                         view.onAddSuccess(MODEL_NAME_USER);
                         view.closeWindow();
                     },
-                    (errCode, res) -> {
-                        PopupView popupView = new PopupView();
-                        popupView.start("Error", "WOULA ca marche pas", "OK");
-                        popupView.addOnBtnOkListener(null);
-                    }
+                    (errCode, res) -> showErorPopup()
 
             );
         }

@@ -93,6 +93,7 @@ public class MainController {
             Field[] fields = cls.getDeclaredFields();
             for (Field field : fields) {
                 if (field.getName().toLowerCase().equals(JSON_ENTRY_KEY_RAW_JSON)) continue;
+                if (field.getName().toLowerCase().equals(JSON_ENTRY_KEY_BADGE_THUMBNAIL)) continue;
                 TableColumn col = new TableColumn(field.getName());
                 col.setMaxWidth(400);
                 col.setCellValueFactory(new PropertyValueFactory<>

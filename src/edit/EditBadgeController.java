@@ -5,7 +5,10 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.json.JSONObject;
+import service.BadgeService;
 
 import static utils.Constants.*;
 
@@ -16,6 +19,7 @@ public class EditBadgeController extends EditController {
     private TextField txf_badge_name;
     private TextArea txa_badge_description;
     private TextField txf_badge_points;
+    private ImageView imv_badge;
 
     private Button btn_validate;
     private Button btn_cancel;
@@ -26,14 +30,15 @@ public class EditBadgeController extends EditController {
         txf_badge_points = (TextField) scene.lookup("#txf_badge_points");
         btn_validate = (Button) scene.lookup("#btn_validate");
         btn_cancel = (Button) scene.lookup("#btn_cancel");
+        imv_badge = (ImageView) scene.lookup("#imv_badge");
 
         oldBadge = new JSONObject(json);
 
-        txf_badge_points.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txf_badge_points.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
+        Image image = new Image(BASE_URL + oldBadge.getString("thumbnailUrl"));
+        imv_badge.setImage(image);
+
+        setTxfNumbersOnly(txf_badge_points);
+        initImv(scene, imv_badge);
 
         txf_badge_name.setText(oldBadge.getString(JSON_ENTRY_KEY_BADGE_NAME));
         txa_badge_description.setText(oldBadge.getString(JSON_ENTRY_KEY_BADGE_DESCRIPTION));
@@ -51,5 +56,9 @@ public class EditBadgeController extends EditController {
         newBadge.put(JSON_ENTRY_KEY_BADGE_ACHIEVEMENT_POINTS, txf_badge_points.getText());
 
         editModel(newBadge.toString(), MODEL_NAME_BADGE);
+
+        if (newImage != null) {
+            BadgeService.setBadgeImage(oldBadge.getString(JSON_ENTRY_KEY_ID), newImage);
+        }
     }
 }

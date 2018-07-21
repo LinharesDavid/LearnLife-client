@@ -1,12 +1,23 @@
 package service;
 
-import model.User;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
-import popup.PopupView;
 import utils.Log;
 import utils.request.builder.OnRequestFailListener;
 import utils.request.builder.OnRequestSuccessListener;
 import utils.request.builder.RequestBuilder;
+
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.ParseException;
 
 import static utils.Constants.*;
 
@@ -67,4 +78,30 @@ public class UserService {
                 .setOnResponseFailListener(failListener)
                 .build();
     }
+
+    public static void setUserImage(String userId, File image){
+        try {
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            HttpPost uploadFile = new HttpPost(BASE_URL + EXTENDED_URL_USERS + userId + "/thumbnail");
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+
+            // This attaches the file to the POST:
+            builder.addBinaryBody(
+                    "image",
+                    new FileInputStream(image),
+                    ContentType.APPLICATION_OCTET_STREAM,
+                    image.getName()
+            );
+
+            HttpEntity multipart = builder.build();
+            uploadFile.setEntity(multipart);
+            CloseableHttpResponse response = httpClient.execute(uploadFile);
+            HttpEntity responseEntity = response.getEntity();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

@@ -1,9 +1,16 @@
 package add;
 
+import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextField;
 import model.Category;
 import model.Tag;
 import org.json.JSONArray;
@@ -53,11 +60,7 @@ public class AddTagController extends AddController {
                         view.onAddSuccess(MODEL_NAME_TAG);
                         view.closeWindow();
                     },
-                    (errCode, res) -> {
-                        PopupView popupView = new PopupView();
-                        popupView.start("Error", "WOULA ca marche pas", "OK");
-                        popupView.addOnBtnOkListener(null);
-                    }
+                    (errCode, res) -> showErorPopup()
             );
         }
     }
@@ -67,4 +70,7 @@ public class AddTagController extends AddController {
     private void onBtnUnselectAllClick(ActionEvent event) {
         liv_tag.getSelectionModel().clearSelection();
     }
+
+
+
 }
