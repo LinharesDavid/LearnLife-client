@@ -20,6 +20,7 @@ import utils.Log;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 import static utils.Constants.*;
@@ -92,6 +93,7 @@ public class MainController {
             Field[] fields = cls.getDeclaredFields();
             for (Field field : fields) {
                 if (field.getName().toLowerCase().equals(JSON_ENTRY_KEY_RAW_JSON)) continue;
+                if (field.getName().toLowerCase().equals(JSON_ENTRY_KEY_BADGE_THUMBNAIL)) continue;
                 TableColumn col = new TableColumn(field.getName());
                 col.setMaxWidth(400);
                 col.setCellValueFactory(new PropertyValueFactory<>
@@ -103,7 +105,9 @@ public class MainController {
             final ContextMenu tableContextMenu = new ContextMenu();
             final MenuItem deleteSelectedMenuItem = new MenuItem(DELETE_SELECTED_ITEM);
             final MenuItem addElement = new MenuItem(ADD_ITEM);
+            final MenuItem viewJson = new MenuItem("View JSON");
             deleteSelectedMenuItem.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
+            viewJson.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
             deleteSelectedMenuItem.setOnAction(event -> {
                 //final List<T> selectedRows = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
                 T selectedRow = (T) tableView.getSelectionModel().getSelectedItem();
@@ -140,12 +144,34 @@ public class MainController {
                 }
 
             });
+
             addElement.setOnAction(event -> {
                 AddView addView = new AddView();
                 addView.start(currentTable);
                 addView.setOnCloseAddWindowListener(this::refresh);
             });
-            tableContextMenu.getItems().addAll(deleteSelectedMenuItem, addElement);
+
+            viewJson.setOnAction(event -> {
+                T selectedRow = (T) tableView.getSelectionModel().getSelectedItem();
+                EditView editView = new EditView();
+                if (selectedRow instanceof User) {
+                    editView.start(((User) selectedRow).getRawJson());
+
+                } else if (selectedRow instanceof Tag) {
+                    editView.start(((Tag) selectedRow).getRawJson());
+
+                } else if (selectedRow instanceof Badge) {
+                    editView.start(((Badge) selectedRow).getRawJson());
+
+                } else if (selectedRow instanceof Challenge) {
+                    editView.start(((Challenge) selectedRow).getRawJson());
+
+                } else if (selectedRow instanceof Category) {
+                    editView.start(((Category) selectedRow).getRawJson());
+                }
+            });
+
+            tableContextMenu.getItems().addAll(deleteSelectedMenuItem, addElement, viewJson);
 
             // Manage when to show or hide the context menu
             tableView.setOnMouseClicked(event -> {
@@ -158,28 +184,24 @@ public class MainController {
                 }
                 if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                     T selectedRow = (T) tableView.getSelectionModel().getSelectedItem();
+                    EditView editView = new EditView();
                     if (selectedRow instanceof User) {
-                        EditView editView = new EditView();
                         editView.start(selectedRow.getClass().getSimpleName(), ((User) selectedRow).getRawJson());
                         editView.setOnCloseEditWindowListener(() -> refresh(User.class.getSimpleName()));
 
                     } else if (selectedRow instanceof Tag) {
-                        EditView editView = new EditView();
                         editView.start(selectedRow.getClass().getSimpleName(), ((Tag) selectedRow).getRawJson());
                         editView.setOnCloseEditWindowListener(() -> refresh(Tag.class.getSimpleName()));
 
                     } else if (selectedRow instanceof Badge) {
-                        EditView editView = new EditView();
                         editView.start(selectedRow.getClass().getSimpleName(), ((Badge) selectedRow).getRawJson());
                         editView.setOnCloseEditWindowListener(() -> refresh(Badge.class.getSimpleName()));
 
                     } else if (selectedRow instanceof Challenge) {
-                        EditView editView = new EditView();
                         editView.start(selectedRow.getClass().getSimpleName(), ((Challenge) selectedRow).getRawJson());
                         editView.setOnCloseEditWindowListener(() -> refresh(Challenge.class.getSimpleName()));
 
                     } else if (selectedRow instanceof Category) {
-                        EditView editView = new EditView();
                         editView.start(selectedRow.getClass().getSimpleName(), ((Category) selectedRow).getRawJson());
                         editView.setOnCloseEditWindowListener(() -> refresh(Category.class.getSimpleName()));
                     }

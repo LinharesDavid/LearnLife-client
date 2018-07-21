@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 
 
-<GridPane hgap="10.0" prefHeight="134.0" prefWidth="259.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddController" alignment="CENTER">
+<GridPane hgap="10.0" prefHeight="134.0" prefWidth="259.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddCategoryController" alignment="CENTER">
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />
@@ -21,7 +21,7 @@
    <children>
       <Label text="Name :" />
       <TextField fx:id="txf_category_name" GridPane.columnIndex="1" />
-      <Button mnemonicParsing="false" text="Validate" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" onAction="#onBtnValidateCategoryClick" />
-      <Button mnemonicParsing="false" text="Cancel" GridPane.halignment="LEFT" GridPane.rowIndex="2" onAction="#onBtnCancelClick" />
+      <Button fx:id="btn_validate" mnemonicParsing="false" text="Validate" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="2" onAction="#onBtnValidateClick" />
+      <Button fx:id="btn_cancel" mnemonicParsing="false" text="Cancel" GridPane.halignment="LEFT" GridPane.rowIndex="2" onAction="#onBtnCancelClick" />
    </children>
 </GridPane>

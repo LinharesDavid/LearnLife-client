@@ -16,12 +16,12 @@ public class Challenge {
     private String endDate;
     private int duration;
     private ArrayList<String> tags;
-    private ArrayList<String> badges;
+    private String badge;
     private String user;
     private int verified;
     private String rawJson;
 
-    public Challenge(String name, String details, String imageUrl, int pointsGiven, String startDate, String endDate, int duration, ArrayList<String> tags, ArrayList<String> badges, String user, int verified) {
+    public Challenge(String name, String details, String imageUrl, int pointsGiven, String startDate, String endDate, int duration, ArrayList<String> tags, String badge, String user, int verified) {
         this.name = name;
         this.details = details;
         this.imageUrl = imageUrl;
@@ -30,7 +30,7 @@ public class Challenge {
         this.endDate = endDate;
         this.duration = duration;
         this.tags = tags;
-        this.badges = badges;
+        this.badge = badge;
         this.user = user;
         this.verified = verified;
     }
@@ -48,9 +48,8 @@ public class Challenge {
             this.duration = map.get(JSON_ENTRY_KEY_CHALLENGE_DURATION) == null ? -1 : (int) map.get(JSON_ENTRY_KEY_CHALLENGE_DURATION);
             this.tags = new ArrayList<>();
             this.tags = map.get(JSON_ENTRY_KEY_CHALLENGE_TAGS) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(JSON_ENTRY_KEY_CHALLENGE_TAGS);
-            this.badges = new ArrayList<>();
-            this.badges = map.get(JSON_ENTRY_KEY_CHALLENGE_BADGE) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(JSON_ENTRY_KEY_CHALLENGE_BADGE);
-            this.user = map.get(JSON_ENTRY_KEY_RAW_JSON) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_RAW_JSON);
+            this.badge = map.get(JSON_ENTRY_KEY_CHALLENGE_BADGE) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_BADGE);
+            this.user = map.get(JSON_ENTRY_KEY_CHALLENGE_USER) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_USER);
             this.verified = map.get(JSON_ENTRY_KEY_CHALLENGE_VERIFIED) == null ? -1 : (int) map.get(JSON_ENTRY_KEY_CHALLENGE_VERIFIED);
             this.rawJson = map.get(JSON_ENTRY_KEY_RAW_JSON) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_RAW_JSON);
         }
@@ -129,12 +128,12 @@ public class Challenge {
         this.tags = tags;
     }
 
-    public ArrayList<String> getBadges() {
-        return badges;
+    public String getBadge() {
+        return badge;
     }
 
-    public void setBadges(ArrayList<String> badges) {
-        this.badges = badges;
+    public void setBadge(String badge) {
+        this.badge = badge;
     }
 
     public String getUser() {
@@ -173,7 +172,7 @@ public class Challenge {
                 ", endDate='" + endDate + '\'' +
                 ", duration=" + duration +
                 ", tags=" + tags +
-                ", badges=" + badges +
+                ", badge=" + badge +
                 ", user=" + user +
                 ", verified=" + verified +
                 '}';

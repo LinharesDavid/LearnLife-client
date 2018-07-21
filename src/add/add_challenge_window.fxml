@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<GridPane alignment="CENTER" hgap="10.0" prefHeight="400.0" prefWidth="320.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddController">
+<GridPane alignment="CENTER" hgap="10.0" prefHeight="753.0" prefWidth="625.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddChallengeController">
    <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
       <ColumnConstraints />
       <ColumnConstraints />
    </columnConstraints>
@@ -22,19 +28,41 @@
       <RowConstraints />
       <RowConstraints />
       <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
    </rowConstraints>
    <children>
       <Label text="Name :" />
       <Label text="Details :" GridPane.rowIndex="1" GridPane.valignment="TOP" />
-      <Label text="Image :" GridPane.rowIndex="2" />
-      <Label text="Points :" GridPane.rowIndex="3" />
-      <Label text="Duration :" GridPane.rowIndex="4" />
-      <Label text="Tags : " GridPane.rowIndex="5" />
-      <TextField fx:id="txf_challenge_name" GridPane.columnIndex="1" />
+      <Label text="Points :" GridPane.rowIndex="2" />
+      <Label text="Duration :" GridPane.rowIndex="3" />
+      <Label text="Tags : " GridPane.columnIndex="2" />
+      <TextField fx:id="txf_challenge_name" prefHeight="27.0" prefWidth="200.0" GridPane.columnIndex="1" />
       <TextArea fx:id="txa_challenge_details" prefHeight="165.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <TextField fx:id="tfx_challenge_image" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <TextField fx:id="txf_challenge_points" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <TextField fx:id="txf_challenge_duration" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <ComboBox fx:id="cmb_challenge_tag" prefHeight="27.0" prefWidth="202.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <TextField fx:id="txf_challenge_points" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <TextField fx:id="txf_challenge_duration" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <Button fx:id="btn_validate" mnemonicParsing="false" onAction="#onBtnValidateClick" text="Validate" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="7" />
+      <Button fx:id="btn_cancel" mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" GridPane.rowIndex="7" />
+      <ListView fx:id="liv_tag" prefHeight="154.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="4" />
+      <Label text="Verified :" GridPane.rowIndex="4" />
+      <ComboBox fx:id="cmb_verified" prefHeight="27.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+         <items>
+            <FXCollections fx:factory="observableArrayList">
+               <String fx:value="Verified" />
+               <String fx:value="Unverified" />
+            </FXCollections>
+         </items>
+         <value>
+            <String fx:value="Verified" />
+         </value>
+      </ComboBox>
+      <Label text="Picture :" GridPane.rowIndex="6" GridPane.valignment="TOP" />
+      <ImageView fx:id="imv_picture" fitHeight="174.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Label text="Badges :" GridPane.columnIndex="2" GridPane.rowIndex="5" GridPane.valignment="TOP" />
+      <ListView fx:id="liv_badge" prefHeight="310.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <TextField fx:id="txf_badge_search" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <TextField fx:id="txf_tag_search" GridPane.columnIndex="3" />
    </children>
 </GridPane>
