@@ -13,7 +13,7 @@ import service.BadgeService;
 
 import static utils.Constants.*;
 
-public class AddBadgeController extends AddController {
+public class AddBadgeController extends BaseAddController {
 
     @FXML
     private ImageView imv_badge;

@@ -8,7 +8,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import model.Challenge;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import popup.PopupView;
@@ -16,7 +15,7 @@ import service.ChallengeService;
 
 import static utils.Constants.*;
 
-public class AddChallengeController extends AddController {
+public class AddChallengeController extends BaseAddController {
 
 
     @FXML private TextField txf_challenge_name;

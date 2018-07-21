@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import static utils.Constants.*;
 
-public class EditCategoryController extends EditController {
+public class EditCategoryController extends BaseEditController {
 
     private JSONObject oldCategory;
 

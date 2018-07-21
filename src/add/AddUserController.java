@@ -3,8 +3,6 @@ package add;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import model.Badge;
 import model.Tag;
@@ -12,13 +10,12 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import popup.PopupView;
 import service.UserService;
-import utils.Log;
 
 import java.awt.image.BufferedImage;
 
 import static utils.Constants.*;
 
-public class AddUserController extends AddController {
+public class AddUserController extends BaseAddController {
 
 
     @FXML

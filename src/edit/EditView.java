@@ -13,7 +13,7 @@ public class EditView {
 
     private Scene scene;
     private Stage stage = new Stage();
-    private EditController controller;
+    private BaseEditController controller;
     private OnEditSuccessCloseWindowListener listener;
 
     public void start(String type, String json) {

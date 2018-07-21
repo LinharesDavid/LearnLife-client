@@ -1,16 +1,9 @@
 package add;
 
-import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
 import model.Category;
 import model.Tag;
 import org.json.JSONArray;
@@ -19,7 +12,7 @@ import service.TagService;
 
 import static utils.Constants.MODEL_NAME_TAG;
 
-public class AddTagController extends AddController {
+public class AddTagController extends BaseAddController {
 
     @FXML
     private ComboBox cmb_tag_category;

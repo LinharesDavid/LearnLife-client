@@ -31,7 +31,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
-public class EditController {
+public class BaseEditController {
 
     public TextArea txaJsonEdit;
     private String prettyJson;

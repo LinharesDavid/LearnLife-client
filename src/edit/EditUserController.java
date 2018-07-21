@@ -1,36 +1,23 @@
 package edit;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
 import model.Badge;
-import model.Category;
 import model.Tag;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import service.OtherService;
-import service.TagService;
 import service.UserService;
-import utils.Log;
 
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
 import java.util.ArrayList;
 
 import static utils.Constants.*;
 
 
-public class EditUserController extends EditController {
+public class EditUserController extends BaseEditController {
 
     private JSONObject oldUser;
     private ArrayList<Badge> badges = null;

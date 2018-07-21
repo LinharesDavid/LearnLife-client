@@ -12,7 +12,7 @@ import service.BadgeService;
 
 import static utils.Constants.*;
 
-public class EditBadgeController extends EditController {
+public class EditBadgeController extends BaseEditController {
 
     private JSONObject oldBadge;
 

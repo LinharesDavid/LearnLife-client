@@ -12,7 +12,7 @@ import static utils.Constants.*;
 public class AddView {
     private Scene scene;
     private Stage stage = new Stage();
-    private AddController controller;
+    private BaseAddController controller;
     private OnAddSuccessCloseWindowListener listener;
 
     public void start(String type) {

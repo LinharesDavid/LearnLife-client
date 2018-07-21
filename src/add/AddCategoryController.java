@@ -5,13 +5,12 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import org.json.JSONObject;
 import popup.PopupView;
 import service.CategoryService;
 
 import static utils.Constants.*;
 
-public class AddCategoryController extends AddController {
+public class AddCategoryController extends BaseAddController {
 
 
     @FXML

@@ -1,7 +1,5 @@
 package add;
 
-import edit.EditController;
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -29,7 +27,7 @@ import java.util.ArrayList;
 
 import static utils.Constants.*;
 
-public class AddController {
+public class BaseAddController {
 
     public PasswordField pwf_user_password;
     public TextField txf_user_email;

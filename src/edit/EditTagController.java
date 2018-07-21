@@ -1,6 +1,5 @@
 package edit;
 
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 
 import static utils.Constants.*;
 
-public class EditTagController extends EditController {
+public class EditTagController extends BaseEditController {
 
     private JSONObject oldTag;
 

@@ -10,14 +10,10 @@ import model.Tag;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import service.ChallengeService;
-import service.OtherService;
-
-import java.io.File;
-import java.util.List;
 
 import static utils.Constants.*;
 
-public class EditChallengeController extends EditController {
+public class EditChallengeController extends BaseEditController {
 
     private JSONObject oldChallenge;
 
