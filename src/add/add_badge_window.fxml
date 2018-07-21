@@ -17,9 +17,9 @@
       <Label text="Points :" GridPane.rowIndex="3" />
       <TextField fx:id="txf_badge_name" GridPane.columnIndex="1" />
       <TextArea fx:id="txa_badge_description" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <ImageView fx:id="imv_badge" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <TextField fx:id="txf_badge_points" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       <Button fx:id="btn_validate" mnemonicParsing="false" onAction="#onBtnValidateClick" text="Validate" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
       <Button fx:id="btn_cancel" mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" GridPane.rowIndex="4" />
-      <ImageView fx:id="imv_badge" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
 </GridPane>
