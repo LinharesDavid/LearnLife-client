@@ -62,3 +62,6 @@ fabric.properties
 .idea/httpRequests
 
 lib/*
+
+.idea/artifacts/
+src/META-INF/
