@@ -22,7 +22,6 @@ public class LoginController {
         if (!url.isEmpty()) {
             BASE_URL = txf_url.getText();
         }
-        BASE_URL = txf_url.getText();
         String login = txf_login.getText();
         String pwd = txf_password.getText();
         try {

@@ -10,9 +10,7 @@ import org.json.JSONArray;
 import popup.PopupView;
 import service.TagService;
 
-import static utils.Constants.ERR;
-import static utils.Constants.ERR_FILL_FIELDS;
-import static utils.Constants.MODEL_NAME_TAG;
+import static utils.Constants.*;
 
 public class AddTagController extends BaseAddController {
 
