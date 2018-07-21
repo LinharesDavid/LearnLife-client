@@ -11,9 +11,9 @@
 
 <GridPane alignment="CENTER" hgap="10" prefHeight="577.0" prefWidth="373.0" vgap="10" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddTagController">
 
-    <Label text="Name :" />
+    <Label text="*Name :" />
     <Label text="Tag Associated :" GridPane.rowIndex="1" />
-    <Label text="Category :" GridPane.rowIndex="3" />
+    <Label text="*Category :" GridPane.rowIndex="3" />
     <TextField fx:id="txf_tag_name" GridPane.columnIndex="1" />
     <TextField fx:id="txf_tag_search" GridPane.columnIndex="1" GridPane.rowIndex="1" />
     <ListView fx:id="liv_tag" prefHeight="322.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -21,4 +21,17 @@
     <ComboBox fx:id="cmb_tag_category" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
     <Button fx:id="btn_validate" mnemonicParsing="false" onAction="#onBtnValidateClick" text="Validate" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="6" />
     <Button fx:id="btn_cancel" mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" GridPane.rowIndex="6" />
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>

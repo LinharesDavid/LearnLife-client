@@ -123,7 +123,7 @@ public class BaseAddController {
         imageView.setImage(new Image("res/default-image.jpg"));
         imageView.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
             FileChooser.ExtensionFilter imageFilter
-                    = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+                    = new FileChooser.ExtensionFilter(FILE_CHOOSER_TITLE, "*.jpg", "*.png");
 
             FileChooser fc = new FileChooser();
             fc.getExtensionFilters().add(imageFilter);
@@ -144,7 +144,7 @@ public class BaseAddController {
 
     void showErorPopup() {
         PopupView popupView = new PopupView();
-        popupView.start("Error", "WOULA ca marche pas", "OK");
+        popupView.start(ERR, ERR_CONTENT_DIDNT_CHANGED, OK);
         popupView.addOnBtnOkListener(null);
     }
 

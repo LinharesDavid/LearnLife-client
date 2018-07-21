@@ -31,6 +31,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 
+import static utils.Constants.*;
+
 public class BaseEditController {
 
     public TextArea txaJsonEdit;
@@ -71,7 +73,7 @@ public class BaseEditController {
                 type,
                 response -> {
                     PopupView popupView = new PopupView();
-                    popupView.start("Error", "WOULA ca a changé", "OK");
+                    popupView.start(ERR, INFO_CONTENT_CHANGED, OK);
                     popupView.addOnBtnOkListener(e -> {
                         view.onSuccess();
                         view.closeWindow();
@@ -79,7 +81,7 @@ public class BaseEditController {
                 },
                 (errCode, res) -> {
                     PopupView popupView = new PopupView();
-                    popupView.start("Error", "WOULA ca marche pas", "OK");
+                    popupView.start(ERR, ERR_CONTENT_DIDNT_CHANGED, OK);
                     popupView.addOnBtnOkListener(null);
                 }
         );
@@ -152,7 +154,7 @@ public class BaseEditController {
     void initImv(Scene scene, ImageView imageView) {
         imageView.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEvent -> {
             FileChooser.ExtensionFilter imageFilter
-                    = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png");
+                    = new FileChooser.ExtensionFilter(FILE_CHOOSER_TITLE, "*.jpg", "*.png");
 
             FileChooser fc = new FileChooser();
             fc.getExtensionFilters().add(imageFilter);

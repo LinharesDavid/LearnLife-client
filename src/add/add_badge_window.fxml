@@ -11,10 +11,10 @@
 
 <GridPane alignment="CENTER" hgap="10.0" prefHeight="504.0" prefWidth="347.0" vgap="10.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="add.AddBadgeController">
    <children>
-      <Label text="Name :" />
-      <Label text="Description : " GridPane.rowIndex="1" GridPane.valignment="TOP" />
+      <Label text="*Name :" />
+      <Label text="*Description : " GridPane.rowIndex="1" GridPane.valignment="TOP" />
       <Label text="Picture : " GridPane.rowIndex="2" />
-      <Label text="Points :" GridPane.rowIndex="3" />
+      <Label text="*Points :" GridPane.rowIndex="3" />
       <TextField fx:id="txf_badge_name" GridPane.columnIndex="1" />
       <TextArea fx:id="txa_badge_description" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <ImageView fx:id="imv_badge" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -22,4 +22,15 @@
       <Button fx:id="btn_validate" mnemonicParsing="false" onAction="#onBtnValidateClick" text="Validate" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
       <Button fx:id="btn_cancel" mnemonicParsing="false" onAction="#onBtnCancelClick" text="Cancel" GridPane.rowIndex="4" />
    </children>
+   <columnConstraints>
+      <ColumnConstraints />
+      <ColumnConstraints />
+   </columnConstraints>
+   <rowConstraints>
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+      <RowConstraints />
+   </rowConstraints>
 </GridPane>

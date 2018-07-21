@@ -27,7 +27,7 @@ public class AddCategoryController extends BaseAddController {
         String name = txf_category_name.getText();
         if (name.isEmpty()) {
             PopupView popupView = new PopupView();
-            popupView.start("Erreur", "You must fill\nevery fields", "OK");
+            popupView.start(ERR, ERR_FILL_FIELDS, OK);
             popupView.addOnBtnOkListener(null);
         } else {
             CategoryService.addCategory(

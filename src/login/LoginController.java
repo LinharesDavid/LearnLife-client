@@ -13,10 +13,16 @@ import static utils.Constants.*;
 public class LoginController {
     public TextField txf_login;
     public TextField txf_password;
+    public TextField txf_url;
     private ConnexionListener listener;
 
     @FXML
     private void onBtnValidateClick(ActionEvent event){
+        String url = txf_url.getText();
+        if (!url.isEmpty()) {
+            BASE_URL = txf_url.getText();
+        }
+        BASE_URL = txf_url.getText();
         String login = txf_login.getText();
         String pwd = txf_password.getText();
         try {

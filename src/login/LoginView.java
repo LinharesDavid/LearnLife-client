@@ -10,6 +10,8 @@ import javafx.stage.WindowEvent;
 import main.OnCloseLoginListener;
 import popup.PopupView;
 
+import static utils.Constants.*;
+
 public class LoginView implements LoginController.ConnexionListener{
 
     private Stage stage = new Stage();
@@ -50,7 +52,7 @@ public class LoginView implements LoginController.ConnexionListener{
     @Override
     public void onConnexionFailed(String err) {
         PopupView popupView = new PopupView();
-        popupView.start("Error", err, "OK");
+        popupView.start(ERR, err, OK);
         popupView.addOnBtnOkListener(event -> {
         });
     }

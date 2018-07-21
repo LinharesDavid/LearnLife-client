@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import popup.PopupView;
 import service.TagService;
 
+import static utils.Constants.ERR;
+import static utils.Constants.ERR_FILL_FIELDS;
 import static utils.Constants.MODEL_NAME_TAG;
 
 public class AddTagController extends BaseAddController {
@@ -27,7 +29,7 @@ public class AddTagController extends BaseAddController {
         String newTagName = txf_tag_name.getText();
         if (newTagName.isEmpty() || cmb_tag_category.getSelectionModel().getSelectedItem() == null) {
             PopupView popupView = new PopupView();
-            popupView.start("Erreur", "You must selet\na categorie and fill\nthe name field", "OK");
+            popupView.start(ERR, ERR_FILL_FIELDS, OK);
             popupView.addOnBtnOkListener(null);
         } else {
             JSONArray tagsArray = new JSONArray();

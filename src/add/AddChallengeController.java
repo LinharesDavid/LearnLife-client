@@ -50,10 +50,11 @@ public class AddChallengeController extends BaseAddController {
         if (name.isEmpty()
             || details.isEmpty()
             || durationStr.isEmpty()
-            || tagsArray.toList().isEmpty()) {
+            || tagsArray.toList().isEmpty()
+            || pointsStr.isEmpty()) {
 
             PopupView popupView = new PopupView();
-            popupView.start("Error", "You must\nfill everything", "OK");
+            popupView.start(ERR, ERR_FILL_FIELDS, OK);
             popupView.addOnBtnOkListener(null);
         } else {
             int duration = Integer.parseInt(durationStr);

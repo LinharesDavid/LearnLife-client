@@ -44,7 +44,7 @@ public class AddUserController extends BaseAddController {
                 txf_user_firstname.getText().isEmpty() ||
                 txf_user_lastname.getText().isEmpty()) {
             PopupView popupView =new PopupView();
-            popupView.start("Erreur", "You must fill\nevery fields", "OK");
+            popupView.start(ERR, ERR_FILL_FIELDS, OK);
             popupView.addOnBtnOkListener(null);
         } else {
             int role = cmb_user_role.getValue().equals("User") ? 0 : 1;

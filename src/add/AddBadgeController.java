@@ -35,7 +35,7 @@ public class AddBadgeController extends BaseAddController {
                 txa_badge_description.getText().isEmpty() ||
                 txf_badge_points.getText().isEmpty()) {
             PopupView popupView = new PopupView();
-            popupView.start("Erreur", "You must fill\nevery fields", "OK");
+            popupView.start(ERR, ERR_FILL_FIELDS, OK);
             popupView.addOnBtnOkListener(null);
         } else {
             BadgeService.addBadge(
