@@ -92,8 +92,8 @@ public class MainController {
             Class cls = Class.forName(values.get(0).getClass().getName());
             Field[] fields = cls.getDeclaredFields();
             for (Field field : fields) {
-                if (field.getName().toLowerCase().equals(JSON_ENTRY_KEY_RAW_JSON)) continue;
-                if (field.getName().toLowerCase().equals(JSON_ENTRY_KEY_BADGE_THUMBNAIL)) continue;
+                if (field.getName().toLowerCase().equals(KEY_GENERIC_RAW_JSON)) continue;
+                if (field.getName().toLowerCase().equals(KEY_BADGE_IMAGE)) continue;
                 TableColumn col = new TableColumn(field.getName());
                 col.setMaxWidth(400);
                 col.setCellValueFactory(new PropertyValueFactory<>
@@ -248,7 +248,7 @@ public class MainController {
                         map.put(o.toString(), objToPutInTheMap);
                     }
                 }
-                map.put(JSON_ENTRY_KEY_RAW_JSON, jsonObject.toString());
+                map.put(KEY_GENERIC_RAW_JSON, jsonObject.toString());
 
                 T o = objType.getConstructor(HashMap.class).newInstance(map);
 

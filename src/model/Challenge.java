@@ -38,20 +38,20 @@ public class Challenge {
     @SuppressWarnings("unchecked cast")
     public Challenge(HashMap<String, Object> map) {
         if (map != null) {
-            this._id = map.get(JSON_ENTRY_KEY_ID) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_ID);
-            this.name = map.get(JSON_ENTRY_KEY_CHALLENGE_NAME) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_NAME);
-            this.details = map.get(JSON_ENTRY_KEY_CHALLENGE_DETAILS) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_DETAILS);
-            this.imageUrl = map.get(JSON_ENTRY_KEY_CHALLENGE_IMAGE_URL) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_IMAGE_URL);
-            this.pointsGiven = map.get(JSON_ENTRY_KEY_CHALLENGE_POINTS_GIVEN) == null ? -1: (int) map.get(JSON_ENTRY_KEY_CHALLENGE_POINTS_GIVEN);
-            this.startDate = map.get(JSON_ENTRY_KEY_CHALLENGE_START_DATE) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_START_DATE);
-            this.endDate = map.get(JSON_ENTRY_KEY_CHALLENGE_END_DATE) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_END_DATE);
-            this.duration = map.get(JSON_ENTRY_KEY_CHALLENGE_DURATION) == null ? -1 : (int) map.get(JSON_ENTRY_KEY_CHALLENGE_DURATION);
+            this._id = map.get(KEY_GENERIC_ID) == null ? "-1" : (String) map.get(KEY_GENERIC_ID);
+            this.name = map.get(KEY_CHALLENGE_NAME) == null ? "-1" : (String) map.get(KEY_CHALLENGE_NAME);
+            this.details = map.get(KEY_CHALLENGE_DETAILS) == null ? "-1" : (String) map.get(KEY_CHALLENGE_DETAILS);
+            this.imageUrl = map.get(KEY_CHALLENGE_IMAGE) == null ? "-1" : (String) map.get(KEY_CHALLENGE_IMAGE);
+            this.pointsGiven = map.get(KEY_CHALLENGE_POINTS_GIVEN) == null ? -1: (int) map.get(KEY_CHALLENGE_POINTS_GIVEN);
+            this.startDate = map.get(KEY_CHALLENGE_START_DATE) == null ? "-1" : (String) map.get(KEY_CHALLENGE_START_DATE);
+            this.endDate = map.get(KEY_CHALLENGE_END_DATE) == null ? "-1" : (String) map.get(KEY_CHALLENGE_END_DATE);
+            this.duration = map.get(KEY_CHALLENGE_DURATION) == null ? -1 : (int) map.get(KEY_CHALLENGE_DURATION);
             this.tags = new ArrayList<>();
-            this.tags = map.get(JSON_ENTRY_KEY_CHALLENGE_TAGS) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(JSON_ENTRY_KEY_CHALLENGE_TAGS);
-            this.badge = map.get(JSON_ENTRY_KEY_CHALLENGE_BADGE) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_BADGE);
-            this.user = map.get(JSON_ENTRY_KEY_CHALLENGE_USER) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CHALLENGE_USER);
-            this.verified = map.get(JSON_ENTRY_KEY_CHALLENGE_VERIFIED) == null ? -1 : (int) map.get(JSON_ENTRY_KEY_CHALLENGE_VERIFIED);
-            this.rawJson = map.get(JSON_ENTRY_KEY_RAW_JSON) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_RAW_JSON);
+            this.tags = map.get(KEY_CHALLENGE_TAGS) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(KEY_CHALLENGE_TAGS);
+            this.badge = map.get(KEY_CHALLENGE_BADGE) == null ? "-1" : (String) map.get(KEY_CHALLENGE_BADGE);
+            this.user = map.get(KEY_CHALLENGE_USER) == null ? "-1" : (String) map.get(KEY_CHALLENGE_USER);
+            this.verified = map.get(KEY_CHALLENGE_VERIFIED) == null ? -1 : (int) map.get(KEY_CHALLENGE_VERIFIED);
+            this.rawJson = map.get(KEY_GENERIC_RAW_JSON) == null ? "-1" : (String) map.get(KEY_GENERIC_RAW_JSON);
         }
     }
 

@@ -22,14 +22,14 @@ public class LoginController {
         try {
             RequestBuilder.builder()
                 .setUrl(BASE_URL + EXTENDED_URL_LOGIN)
-                .addRequestBodyParameter(BODY_PARAMETER_EMAIL, login)
-                .addRequestBodyParameter(BODY_PARAMETER_PASSWORD, pwd)
+                .addRequestBodyParameter(KEY_USER_EMAIL, login)
+                .addRequestBodyParameter(KEY_USER_PASSWORD, pwd)
                 .addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON)
                 .setRequestMethod("POST")
                 .setOnResponseFailListener((errCode, res) -> listener.onConnexionFailed(res))
                 .setOnResponseSuccessListener(response -> {
                     JSONObject jsonObject = new JSONObject(response);
-                    if (jsonObject.getJSONObject(MODEL_NAME_USER).getInt(JSON_ENTRY_KEY_USER_ROLE) == 1) {
+                    if (jsonObject.getJSONObject(MODEL_NAME_USER).getInt(KEY_USER_ROLE) == 1) {
                         Session.getInstance().setToken(jsonObject.getString(RESPONSE_FIELD_TOKEN));
                         listener.onConnexionSuccess();
                     } else {

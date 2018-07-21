@@ -39,9 +39,9 @@ public class TagService {
         RequestBuilder.builder()
                 .setUrl(BASE_URL + EXTENDED_URL_TAG)
                 .setRequestMethod("POST")
-                .addRequestBodyParameter(BODY_PARAMETER_NAME, name)
-                .addRequestBodyParameter(BODY_PARAMETER_TAG_ASSOCIATED, tags)
-                .addRequestBodyParameter(BODY_PARAMETER_CATEGORY, category)
+                .addRequestBodyParameter(KEY_TAG_NAME, name)
+                .addRequestBodyParameter(KEY_TAG_TAG_ASSOSCIATED, tags)
+                .addRequestBodyParameter(KEY_TAG_CATEGORY, category)
                 .setOnResponseSuccessListener(successListener)
                 .setOnResponseFailListener(failListener)
                 .build();
@@ -53,8 +53,8 @@ public class TagService {
         for (int i = 0; i < jsonArrayTag.length(); i++) {
             JSONObject jsonObjectTag = jsonArrayTag.getJSONObject(i);
             Tag tag = new Tag();
-            tag.set_id(jsonObjectTag.getString(JSON_ENTRY_KEY_ID));
-            tag.setName(jsonObjectTag.getString(JSON_ENTRY_KEY_TAG_NAME));
+            tag.set_id(jsonObjectTag.getString(KEY_GENERIC_ID));
+            tag.setName(jsonObjectTag.getString(KEY_TAG_NAME));
 
             tags.add(tag);
         }

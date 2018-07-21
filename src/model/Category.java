@@ -16,9 +16,9 @@ public class Category {
     }
 
     public Category(HashMap<String, Object> map) {
-        this._id = map.get(JSON_ENTRY_KEY_ID) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_ID);
-        this.name = map.get(JSON_ENTRY_KEY_BADGE_NAME) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_CATEGORY_NAME);
-        this.rawJson = map.get(JSON_ENTRY_KEY_RAW_JSON) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_RAW_JSON);
+        this._id = map.get(KEY_GENERIC_ID) == null ? "-1" : (String) map.get(KEY_GENERIC_ID);
+        this.name = map.get(KEY_BADGE_NAME) == null ? "-1" : (String) map.get(KEY_CATEGORY_NAME);
+        this.rawJson = map.get(KEY_GENERIC_RAW_JSON) == null ? "-1" : (String) map.get(KEY_GENERIC_RAW_JSON);
     }
 
     public String get_id() {

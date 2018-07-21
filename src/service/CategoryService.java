@@ -32,7 +32,7 @@ public class CategoryService {
         RequestBuilder.builder()
                 .setUrl(BASE_URL + EXTENDED_URL_CATEGORY)
                 .setRequestMethod("POST")
-                .addRequestBodyParameter(BODY_PARAMETER_NAME, name)
+                .addRequestBodyParameter(KEY_CATEGORY_NAME, name)
                 .setOnResponseSuccessListener(successListener)
                 .setOnResponseFailListener(failListener)
                 .build();

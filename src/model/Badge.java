@@ -23,12 +23,12 @@ public class Badge {
     }
 
     public Badge(HashMap<String, Object> map) {
-        this._id = map.get(JSON_ENTRY_KEY_ID) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_ID);
-        this.name =  map.get(JSON_ENTRY_KEY_BADGE_NAME) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_BADGE_NAME);
-        this.description = map.get(JSON_ENTRY_KEY_BADGE_DESCRIPTION) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_BADGE_DESCRIPTION);
-        this.thumbnail = map.get(JSON_ENTRY_KEY_BADGE_THUMBNAIL) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_BADGE_THUMBNAIL);
-        this.achievementPoints = map.get(JSON_ENTRY_KEY_BADGE_ACHIEVEMENT_POINTS) == null ? -1 : (int) map.get(JSON_ENTRY_KEY_BADGE_ACHIEVEMENT_POINTS);
-        this.rawJson = map.get(JSON_ENTRY_KEY_RAW_JSON) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_RAW_JSON);
+        this._id = map.get(KEY_GENERIC_ID) == null ? "-1" : (String) map.get(KEY_GENERIC_ID);
+        this.name =  map.get(KEY_BADGE_NAME) == null ? "-1" : (String) map.get(KEY_BADGE_NAME);
+        this.description = map.get(KEY_BADGE_DESCRIPTION) == null ? "-1" : (String) map.get(KEY_BADGE_DESCRIPTION);
+        this.thumbnail = map.get(KEY_BADGE_IMAGE) == null ? "-1" : (String) map.get(KEY_BADGE_IMAGE);
+        this.achievementPoints = map.get(KEY_BADGE_ACHIEVEMENT_POINTS) == null ? -1 : (int) map.get(KEY_BADGE_ACHIEVEMENT_POINTS);
+        this.rawJson = map.get(KEY_GENERIC_RAW_JSON) == null ? "-1" : (String) map.get(KEY_GENERIC_RAW_JSON);
     }
 
     public String get_id() {

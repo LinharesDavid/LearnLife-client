@@ -89,8 +89,8 @@ public class AddController {
         JSONArray jsonArrayCat = new JSONArray(res);
         for (int i = 0; i < jsonArrayCat.length(); i++) {
             JSONObject jsonObjectCat = jsonArrayCat.getJSONObject(i);
-            categories.add(new Category(jsonObjectCat.getString(JSON_ENTRY_KEY_ID),
-                    jsonObjectCat.getString(JSON_ENTRY_KEY_CATEGORY_NAME)));
+            categories.add(new Category(jsonObjectCat.getString(KEY_GENERIC_ID),
+                    jsonObjectCat.getString(KEY_CATEGORY_NAME)));
         }
         initCategoryCmb();
     }

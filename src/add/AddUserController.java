@@ -16,8 +16,7 @@ import utils.Log;
 
 import java.awt.image.BufferedImage;
 
-import static utils.Constants.JSON_ENTRY_KEY_ID;
-import static utils.Constants.MODEL_NAME_USER;
+import static utils.Constants.*;
 
 public class AddUserController extends AddController {
 
@@ -82,7 +81,7 @@ public class AddUserController extends AddController {
                     response -> {
                         if (newImage != null) {
                             JSONObject userJson = new JSONObject(response);
-                            UserService.setUserImage(userJson.getString(JSON_ENTRY_KEY_ID), newImage);
+                            UserService.setUserImage(userJson.getString(KEY_GENERIC_ID), newImage);
                         }
                         view.onAddSuccess(MODEL_NAME_USER);
                         view.closeWindow();

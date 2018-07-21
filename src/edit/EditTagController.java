@@ -47,7 +47,7 @@ public class EditTagController extends EditController {
         );
 
 
-        txf_tag_name.setText(oldTag.getString(JSON_ENTRY_KEY_TAG_NAME));
+        txf_tag_name.setText(oldTag.getString(KEY_TAG_NAME));
         btn_validate.setOnAction(this::onBtnValidateClick);
         btn_cancel.setOnAction(this::onBtnCancelClick);
     }
@@ -73,7 +73,7 @@ public class EditTagController extends EditController {
 
             liv_tag.setItems(filteredData);
             liv_tag.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-            String oldtags = oldTag.getJSONArray(JSON_ENTRY_KEY_TAG_TAG_ASSOSCIATED).toString();
+            String oldtags = oldTag.getJSONArray(KEY_TAG_TAG_ASSOSCIATED).toString();
             for (Tag tag : tags) {
                 if (oldtags.contains(tag.get_id()))
                     liv_tag.getSelectionModel().select(tag.getName());
@@ -91,8 +91,8 @@ public class EditTagController extends EditController {
         JSONArray jsonArrayCat = new JSONArray(response);
         for (int i = 0; i < jsonArrayCat.length(); i++) {
             JSONObject jsonObjectCat = jsonArrayCat.getJSONObject(i);
-            categories.add(new Category(jsonObjectCat.getString(JSON_ENTRY_KEY_ID),
-                    jsonObjectCat.getString(JSON_ENTRY_KEY_CATEGORY_NAME)));
+            categories.add(new Category(jsonObjectCat.getString(KEY_GENERIC_ID),
+                    jsonObjectCat.getString(KEY_CATEGORY_NAME)));
         }
         ObservableList<String> comboBoxData = FXCollections.observableArrayList();
         for (Category category : categories) {
@@ -101,15 +101,15 @@ public class EditTagController extends EditController {
         cmb_tag_category.setItems(comboBoxData);
 
         for (Category category : categories) {
-            if(category.get_id().equals(oldTag.getString(JSON_ENTRY_KEY_TAG_CATEGORY)))
+            if(category.get_id().equals(oldTag.getString(KEY_TAG_CATEGORY)))
                 cmb_tag_category.getSelectionModel().select(category.getName());
         }
     }
 
     private void onBtnValidateClick(ActionEvent event){
         JSONObject newTag = new JSONObject();
-        newTag.put(JSON_ENTRY_KEY_ID, oldTag.getString(JSON_ENTRY_KEY_ID));
-        newTag.put(JSON_ENTRY_KEY_TAG_NAME, txf_tag_name.getText());
+        newTag.put(KEY_GENERIC_ID, oldTag.getString(KEY_GENERIC_ID));
+        newTag.put(KEY_TAG_NAME, txf_tag_name.getText());
 
         JSONArray tagsArray = new JSONArray();
         for (Object o : liv_tag.getSelectionModel().getSelectedItems()) {
@@ -126,8 +126,8 @@ public class EditTagController extends EditController {
             }
         }
 
-        newTag.put(JSON_ENTRY_KEY_TAG_TAG_ASSOSCIATED, tagsArray);
-        newTag.put(JSON_ENTRY_KEY_TAG_CATEGORY, selectedCategoryId);
+        newTag.put(KEY_TAG_TAG_ASSOSCIATED, tagsArray);
+        newTag.put(KEY_TAG_CATEGORY, selectedCategoryId);
 
         editModel(newTag.toString(), MODEL_NAME_TAG);
     }

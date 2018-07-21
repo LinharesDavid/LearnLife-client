@@ -71,33 +71,33 @@ public class EditUserController extends EditController {
         Image image = new Image(BASE_URL + oldUser.getString("thumbnailUrl"));
         imv_user.setImage(image);
 
-        txf_user_email.setText(oldUser.getString(JSON_ENTRY_KEY_USER_EMAIL));
-        txf_user_firstname.setText(oldUser.getString(JSON_ENTRY_KEY_USER_FIRSTNAME));
-        txf_user_lastname.setText(oldUser.getString(JSON_ENTRY_KEY_USER_LASTNAME));
-        txf_user_points.setText(String.valueOf(oldUser.getInt(JSON_ENTRY_KEY_USER_POINTS)));
+        txf_user_email.setText(oldUser.getString(KEY_USER_EMAIL));
+        txf_user_firstname.setText(oldUser.getString(KEY_USER_FIRSTNAME));
+        txf_user_lastname.setText(oldUser.getString(KEY_USER_LASTNAME));
+        txf_user_points.setText(String.valueOf(oldUser.getInt(KEY_USER_POINTS)));
 
         btn_validate.setOnAction(this::onBtnValidateClick);
         btn_cancel.setOnAction(this::onBtnCancelClick);
         btn_unselect_badges.setOnAction(this::onBtnUnselectBadgesClick);
         btn_unselect_tags.setOnAction(this::onBtnUnselectTagsClick);
 
-        initTagListView(oldUser.getJSONArray(JSON_ENTRY_KEY_USER_TAGS).toString());
-        initBadgeListView(oldUser.getJSONArray(JSON_ENTRY_KEY_USER_BADGES).toString());
+        initTagListView(oldUser.getJSONArray(KEY_USER_TAGS).toString());
+        initBadgeListView(oldUser.getJSONArray(KEY_USER_BADGES).toString());
         initImv(scene, imv_user);
     }
 
     private void onBtnValidateClick(ActionEvent event) {
         JSONObject newUser = new JSONObject();
-        newUser.put(JSON_ENTRY_KEY_ID, oldUser.getString(JSON_ENTRY_KEY_ID));
-        newUser.put(JSON_ENTRY_KEY_USER_EMAIL, txf_user_email.getText());
+        newUser.put(KEY_GENERIC_ID, oldUser.getString(KEY_GENERIC_ID));
+        newUser.put(KEY_USER_EMAIL, txf_user_email.getText());
         if (!pwf_user_password.getText().isEmpty()) {
-            newUser.put(JSON_ENTRY_KEY_USER_PASSWORD, pwf_user_password.getText());
+            newUser.put(KEY_USER_PASSWORD, pwf_user_password.getText());
         }
         int role = cmb_user_role.getValue().equals("User") ? 0 : 1;
-        newUser.put(JSON_ENTRY_KEY_USER_ROLE, role);
-        newUser.put(JSON_ENTRY_KEY_USER_FIRSTNAME, txf_user_firstname.getText());
-        newUser.put(JSON_ENTRY_KEY_USER_LASTNAME, txf_user_lastname.getText());
-        newUser.put(JSON_ENTRY_KEY_USER_POINTS, txf_user_points.getText());
+        newUser.put(KEY_USER_ROLE, role);
+        newUser.put(KEY_USER_FIRSTNAME, txf_user_firstname.getText());
+        newUser.put(KEY_USER_LASTNAME, txf_user_lastname.getText());
+        newUser.put(KEY_USER_POINTS, txf_user_points.getText());
 
         JSONArray tagsArray = new JSONArray();
         for (Object o : liv_tag.getSelectionModel().getSelectedItems()) {
@@ -115,13 +115,13 @@ public class EditUserController extends EditController {
                     badgesArray.put(badge.get_id());
         }
 
-        newUser.put(JSON_ENTRY_KEY_USER_TAGS, tagsArray);
-        newUser.put(JSON_ENTRY_KEY_USER_BADGES, badgesArray);
+        newUser.put(KEY_USER_TAGS, tagsArray);
+        newUser.put(KEY_USER_BADGES, badgesArray);
 
         editModel(newUser.toString(), MODEL_NAME_USER);
 
         if (newImage!= null) {
-            UserService.setUserImage(newUser.getString(JSON_ENTRY_KEY_ID), newImage);
+            UserService.setUserImage(newUser.getString(KEY_GENERIC_ID), newImage);
         }
     }
 

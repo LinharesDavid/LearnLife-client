@@ -25,12 +25,12 @@ public class Tag {
     @SuppressWarnings("unchecked cast")
     public Tag(HashMap<String, Object> map) {
         if (map != null) {
-            this._id = map.get(JSON_ENTRY_KEY_ID) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_ID);
-            this.name = map.get(JSON_ENTRY_KEY_TAG_NAME) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_TAG_NAME);
+            this._id = map.get(KEY_GENERIC_ID) == null ? "-1" : (String) map.get(KEY_GENERIC_ID);
+            this.name = map.get(KEY_TAG_NAME) == null ? "-1" : (String) map.get(KEY_TAG_NAME);
             this.tagAssociated = new ArrayList<>();
-            this.tagAssociated = map.get(JSON_ENTRY_KEY_TAG_TAG_ASSOSCIATED) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(JSON_ENTRY_KEY_TAG_TAG_ASSOSCIATED);
-            this.category = map.get(JSON_ENTRY_KEY_TAG_CATEGORY) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_TAG_CATEGORY);
-            this.rawJson = map.get(JSON_ENTRY_KEY_RAW_JSON) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_RAW_JSON);
+            this.tagAssociated = map.get(KEY_TAG_TAG_ASSOSCIATED) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(KEY_TAG_TAG_ASSOSCIATED);
+            this.category = map.get(KEY_TAG_CATEGORY) == null ? "-1" : (String) map.get(KEY_TAG_CATEGORY);
+            this.rawJson = map.get(KEY_GENERIC_RAW_JSON) == null ? "-1" : (String) map.get(KEY_GENERIC_RAW_JSON);
         }
     }
 

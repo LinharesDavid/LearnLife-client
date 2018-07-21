@@ -70,7 +70,7 @@ public class AddChallengeController extends AddController {
                     response -> {
                         if (newImage != null) {
                             JSONObject challengeJson = new JSONObject(response);
-                            ChallengeService.setChallengeImage(challengeJson.getString(JSON_ENTRY_KEY_ID), newImage);
+                            ChallengeService.setChallengeImage(challengeJson.getString(KEY_GENERIC_ID), newImage);
                         }
                         view.onAddSuccess(MODEL_NAME_CHALLENGE);
                         view.closeWindow();
