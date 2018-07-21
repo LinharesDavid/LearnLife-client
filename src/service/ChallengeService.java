@@ -48,13 +48,13 @@ public class ChallengeService {
         RequestBuilder.builder()
                 .setUrl(BASE_URL + EXTENDED_URL_CHALLENGE)
                 .setRequestMethod("POST")
-                .addRequestBodyParameter(BODY_PARAMETER_NAME, name)
-                .addRequestBodyParameter(JSON_ENTRY_KEY_CHALLENGE_DETAILS, details)
-                .addRequestBodyParameter(JSON_ENTRY_KEY_CHALLENGE_TAGS, tags)
-                .addRequestBodyParameter(JSON_ENTRY_KEY_CHALLENGE_BADGE, badge)
-                .addRequestBodyParameter(JSON_ENTRY_KEY_CHALLENGE_DURATION, duration)
-                .addRequestBodyParameter(JSON_ENTRY_KEY_CHALLENGE_VERIFIED, verified)
-                .addRequestBodyParameter("pointsGiven", points)
+                .addRequestBodyParameter(KEY_CHALLENGE_NAME, name)
+                .addRequestBodyParameter(KEY_CHALLENGE_DETAILS, details)
+                .addRequestBodyParameter(KEY_CHALLENGE_TAGS, tags)
+                .addRequestBodyParameter(KEY_CHALLENGE_BADGE, badge)
+                .addRequestBodyParameter(KEY_CHALLENGE_DURATION, duration)
+                .addRequestBodyParameter(KEY_CHALLENGE_VERIFIED, verified)
+                .addRequestBodyParameter(KEY_CHALLENGE_POINTS_GIVEN, points)
                 .setOnResponseSuccessListener(successListener)
                 .setOnResponseFailListener(failListener)
                 .build();
@@ -63,7 +63,7 @@ public class ChallengeService {
     public static void setChallengeImage(String challengeId, File image){
         try {
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpPost uploadFile = new HttpPost(BASE_URL + EXTENDED_URL_CHALLENGE + challengeId + "/image");
+            HttpPost uploadFile = new HttpPost(BASE_URL + EXTENDED_URL_CHALLENGE + challengeId + EXTENDED_URL_IMAGE);
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
             // This attaches the file to the POST:

@@ -24,15 +24,15 @@ public class EditCategoryController extends EditController {
 
         oldCategory = new JSONObject(json);
 
-        txf_category_name.setText(oldCategory.getString(JSON_ENTRY_KEY_CATEGORY_NAME));
+        txf_category_name.setText(oldCategory.getString(KEY_CATEGORY_NAME));
         btn_validate.setOnAction(this::onBtnValidateClick);
         btn_cancel.setOnAction(this::onBtnCancelClick);
     }
 
     private void onBtnValidateClick(ActionEvent event) {
         JSONObject newCategory = new JSONObject();
-        newCategory.put(JSON_ENTRY_KEY_ID, oldCategory.getString(JSON_ENTRY_KEY_ID));
-        newCategory.put(JSON_ENTRY_KEY_CATEGORY_NAME, txf_category_name.getText());
+        newCategory.put(KEY_GENERIC_ID, oldCategory.getString(KEY_GENERIC_ID));
+        newCategory.put(KEY_CATEGORY_NAME, txf_category_name.getText());
 
         editModel(newCategory.toString(), MODEL_NAME_CATEGORY);
     }

@@ -49,19 +49,19 @@ public class User {
     @SuppressWarnings("unchecked cast")
     public User(HashMap<String, Object> map) {
         if (map != null) {
-            this._id = map.get(JSON_ENTRY_KEY_ID) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_ID);
-            this.email = map.get(JSON_ENTRY_KEY_USER_EMAIL) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_USER_EMAIL);
-            this.firstname = map.get(JSON_ENTRY_KEY_USER_FIRSTNAME) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_USER_FIRSTNAME);
-            this.lastname = map.get(JSON_ENTRY_KEY_USER_LASTNAME) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_USER_LASTNAME);
-            this.age = map.get(JSON_ENTRY_KEY_USER_AGE) == null ? -1 : (Integer) map.get(JSON_ENTRY_KEY_USER_AGE);
+            this._id = map.get(KEY_GENERIC_ID) == null ? "-1" : (String) map.get(KEY_GENERIC_ID);
+            this.email = map.get(KEY_USER_EMAIL) == null ? "-1" : (String) map.get(KEY_USER_EMAIL);
+            this.firstname = map.get(KEY_USER_FIRSTNAME) == null ? "-1" : (String) map.get(KEY_USER_FIRSTNAME);
+            this.lastname = map.get(KEY_USER_LASTNAME) == null ? "-1" : (String) map.get(KEY_USER_LASTNAME);
+            this.age = map.get(KEY_USER_AGE) == null ? -1 : (Integer) map.get(KEY_USER_AGE);
             this.badges = new ArrayList<>();
-            this.badges = map.get(JSON_ENTRY_KEY_USER_BADGES) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(JSON_ENTRY_KEY_USER_BADGES);
-            this.points = map.get(JSON_ENTRY_KEY_USER_POINTS) == null ? -1 : (Integer) map.get(JSON_ENTRY_KEY_USER_POINTS);
+            this.badges = map.get(KEY_USER_BADGES) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(KEY_USER_BADGES);
+            this.points = map.get(KEY_USER_POINTS) == null ? -1 : (Integer) map.get(KEY_USER_POINTS);
             this.tags = new ArrayList<>();
-            this.tags = map.get(JSON_ENTRY_KEY_USER_TAGS) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(JSON_ENTRY_KEY_USER_TAGS);
-            this.thumbnail = map.get(JSON_ENTRY_KEY_USER_THUMBNAIL) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_USER_THUMBNAIL);
-            this.role = map.get(JSON_ENTRY_KEY_USER_ROLE) == null ? -1 : (Integer) map.get(JSON_ENTRY_KEY_USER_ROLE);
-            this.rawJson = map.get(JSON_ENTRY_KEY_RAW_JSON) == null ? "-1" : (String) map.get(JSON_ENTRY_KEY_RAW_JSON);
+            this.tags = map.get(KEY_USER_TAGS) == null ? (ArrayList<String>) Collections.singletonList("-1") : (ArrayList) map.get(KEY_USER_TAGS);
+            this.thumbnail = map.get(KEY_USER_IMAGE) == null ? "-1" : (String) map.get(KEY_USER_IMAGE);
+            this.role = map.get(KEY_USER_ROLE) == null ? -1 : (Integer) map.get(KEY_USER_ROLE);
+            this.rawJson = map.get(KEY_GENERIC_RAW_JSON) == null ? "-1" : (String) map.get(KEY_GENERIC_RAW_JSON);
         }
     }
 

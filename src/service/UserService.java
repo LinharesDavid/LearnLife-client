@@ -47,11 +47,11 @@ public class UserService {
         RequestBuilder.builder()
                 .setUrl(BASE_URL + EXTENDED_URL_USERS)
                 .setRequestMethod("POST")
-                .addRequestBodyParameter(BODY_PARAMETER_EMAIL, email)
-                .addRequestBodyParameter(BODY_PARAMETER_PASSWORD, pwd)
-                .addRequestBodyParameter(BODY_PARAMETER_FIRSTNAME, firstname)
-                .addRequestBodyParameter(BODY_PARAMETER_LASTNAME, lastname)
-                .addRequestBodyParameter(BODY_PARAMETER_ROLE, role)
+                .addRequestBodyParameter(KEY_USER_EMAIL, email)
+                .addRequestBodyParameter(KEY_USER_PASSWORD, pwd)
+                .addRequestBodyParameter(KEY_USER_FIRSTNAME, firstname)
+                .addRequestBodyParameter(KEY_USER_LASTNAME, lastname)
+                .addRequestBodyParameter(KEY_USER_ROLE, role)
                 .setOnResponseSuccessListener(successListener)
                 .setOnResponseFailListener(failListener)
                 .build();
@@ -61,11 +61,11 @@ public class UserService {
         RequestBuilder.builder()
                 .setUrl(BASE_URL + EXTENDED_URL_USERS)
                 .setRequestMethod("PUT")
-                .addRequestBodyParameter(BODY_PARAMETER_EMAIL, email)
-                .addRequestBodyParameter(BODY_PARAMETER_PASSWORD, pwd)
-                .addRequestBodyParameter(BODY_PARAMETER_FIRSTNAME, firstname)
-                .addRequestBodyParameter(BODY_PARAMETER_LASTNAME, lastname)
-                .addRequestBodyParameter(BODY_PARAMETER_ROLE, role)
+                .addRequestBodyParameter(KEY_USER_EMAIL, email)
+                .addRequestBodyParameter(KEY_USER_PASSWORD, pwd)
+                .addRequestBodyParameter(KEY_USER_FIRSTNAME, firstname)
+                .addRequestBodyParameter(KEY_USER_LASTNAME, lastname)
+                .addRequestBodyParameter(KEY_USER_ROLE, role)
                 .build();
     }
 
@@ -82,7 +82,7 @@ public class UserService {
     public static void setUserImage(String userId, File image){
         try {
             CloseableHttpClient httpClient = HttpClients.createDefault();
-            HttpPost uploadFile = new HttpPost(BASE_URL + EXTENDED_URL_USERS + userId + "/thumbnail");
+            HttpPost uploadFile = new HttpPost(BASE_URL + EXTENDED_URL_USERS + userId + EXTENDED_URL_THUMBNAIL);
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
             // This attaches the file to the POST:

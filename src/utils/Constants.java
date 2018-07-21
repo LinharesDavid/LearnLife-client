@@ -12,20 +12,8 @@ public final class Constants {
     public static final String EXTENDED_URL_TAG = "tags/";
     public static final String EXTENDED_URL_CHALLENGE = "challenges/";
     public static final String EXTENDED_URL_BADGE = "badges/";
-
-
-    public static final String BODY_PARAMETER_EMAIL = "email";
-    public static final String BODY_PARAMETER_PASSWORD = "password";
-    public static final String BODY_PARAMETER_FIRSTNAME = "firstname";
-    public static final String BODY_PARAMETER_LASTNAME = "lastname";
-    public static final String BODY_PARAMETER_ROLE = "role";
-    public static final String BODY_PARAMETER_NAME = "name";
-    public static final String BODY_PARAMETER_CATEGORY = "category";
-    public static final String BODY_PARAMETER_TAG_ASSOCIATED = "tagAssociated";
-    public static final String BODY_PARAMETER_THUMBNAIL_URL = "thumbnailUrl";
-    public static final String BODY_PARAMETER_DESCRIPTION = "description";
-    public static final String BODY_PARAMETER_POINTS = "achievementPoints";
-
+    public static final String EXTENDED_URL_THUMBNAIL = "/thumbnail";
+    public static final String EXTENDED_URL_IMAGE = "/image";
 
     public static final String REQUEST_PROPERTY_CONTENT_TYPE ="Content-Type";
     public static final String REQUEST_PROPERTY_CONTENT_TYPE_JSON ="application/json";
@@ -40,42 +28,42 @@ public final class Constants {
 
     // *************************** JSON keys ***************************
 
-    public static final String JSON_ENTRY_KEY_ID = "_id";
-    public static final String JSON_ENTRY_KEY_RAW_JSON = "rawjson";
+    public static final String KEY_GENERIC_ID = "_id";
+    public static final String KEY_GENERIC_RAW_JSON = "rawjson";
     //User
-    public static final String JSON_ENTRY_KEY_USER_EMAIL = "email";
-    public static final String JSON_ENTRY_KEY_USER_PASSWORD = "password";
-    public static final String JSON_ENTRY_KEY_USER_FIRSTNAME = "firstname";
-    public static final String JSON_ENTRY_KEY_USER_LASTNAME = "lastname";
-    public static final String JSON_ENTRY_KEY_USER_AGE = "age";
-    public static final String JSON_ENTRY_KEY_USER_BADGES = "badges";
-    public static final String JSON_ENTRY_KEY_USER_POINTS = "points";
-    public static final String JSON_ENTRY_KEY_USER_TAGS = "tags";
-    public static final String JSON_ENTRY_KEY_USER_THUMBNAIL = "thumbnail";
-    public static final String JSON_ENTRY_KEY_USER_ROLE = "role";
+    public static final String KEY_USER_EMAIL = "email";
+    public static final String KEY_USER_PASSWORD = "password";
+    public static final String KEY_USER_FIRSTNAME = "firstname";
+    public static final String KEY_USER_LASTNAME = "lastname";
+    public static final String KEY_USER_AGE = "age";
+    public static final String KEY_USER_BADGES = "badges";
+    public static final String KEY_USER_POINTS = "points";
+    public static final String KEY_USER_TAGS = "tags";
+    public static final String KEY_USER_IMAGE = "thumbnail";
+    public static final String KEY_USER_ROLE = "role";
     //Badge
-    public static final String JSON_ENTRY_KEY_BADGE_NAME = "name";
-    public static final String JSON_ENTRY_KEY_BADGE_DESCRIPTION = "description";
-    public static final String JSON_ENTRY_KEY_BADGE_THUMBNAIL = "thumbnail";
-    public static final String JSON_ENTRY_KEY_BADGE_ACHIEVEMENT_POINTS = "achievementPoints";
+    public static final String KEY_BADGE_NAME = "name";
+    public static final String KEY_BADGE_DESCRIPTION = "description";
+    public static final String KEY_BADGE_IMAGE = "thumbnailUrl";
+    public static final String KEY_BADGE_ACHIEVEMENT_POINTS = "achievementPoints";
     //Category
-    public static final String JSON_ENTRY_KEY_CATEGORY_NAME = "name";
+    public static final String KEY_CATEGORY_NAME = "name";
     //Challenge
-    public static final String JSON_ENTRY_KEY_CHALLENGE_NAME = "name";
-    public static final String JSON_ENTRY_KEY_CHALLENGE_DETAILS = "details";
-    public static final String JSON_ENTRY_KEY_CHALLENGE_IMAGE_URL = "imageUrl";
-    public static final String JSON_ENTRY_KEY_CHALLENGE_POINTS_GIVEN = "pointsGiven";
-    public static final String JSON_ENTRY_KEY_CHALLENGE_START_DATE = "startDate";
-    public static final String JSON_ENTRY_KEY_CHALLENGE_END_DATE = "endDate";
-    public static final String JSON_ENTRY_KEY_CHALLENGE_DURATION = "duration";
-    public static final String JSON_ENTRY_KEY_CHALLENGE_TAGS = "tags";
-    public static final String JSON_ENTRY_KEY_CHALLENGE_BADGE = "badge";
-    public static final String JSON_ENTRY_KEY_CHALLENGE_USER = "user";
-    public static final String JSON_ENTRY_KEY_CHALLENGE_VERIFIED = "verified";
+    public static final String KEY_CHALLENGE_NAME = "name";
+    public static final String KEY_CHALLENGE_DETAILS = "details";
+    public static final String KEY_CHALLENGE_IMAGE = "imageUrl";
+    public static final String KEY_CHALLENGE_POINTS_GIVEN = "pointsGiven";
+    public static final String KEY_CHALLENGE_START_DATE = "startDate";
+    public static final String KEY_CHALLENGE_END_DATE = "endDate";
+    public static final String KEY_CHALLENGE_DURATION = "duration";
+    public static final String KEY_CHALLENGE_TAGS = "tags";
+    public static final String KEY_CHALLENGE_BADGE = "badge";
+    public static final String KEY_CHALLENGE_USER = "user";
+    public static final String KEY_CHALLENGE_VERIFIED = "verified";
     //Tag
-    public static final String JSON_ENTRY_KEY_TAG_NAME = "name";
-    public static final String JSON_ENTRY_KEY_TAG_TAG_ASSOSCIATED = "tagAssociated";
-    public static final String JSON_ENTRY_KEY_TAG_CATEGORY = "category";
+    public static final String KEY_TAG_NAME = "name";
+    public static final String KEY_TAG_TAG_ASSOSCIATED = "tagAssociated";
+    public static final String KEY_TAG_CATEGORY = "category";
 
     // **************************** WORDING ****************************
 
@@ -83,9 +71,6 @@ public final class Constants {
     public static final String ERR_READING_RESPONSE = "Error while reading response";
     public static final String DELETE_SELECTED_ITEM = "Delete Selected Item";
     public static final String ADD_ITEM = "Add Item";
-
-    public static final String NO_VALUE_FOR_THIS_KEY_STRING = "N/A";
-    public static final int NO_VALUE_FOR_THIS_KEY_INT = -1;
 
     public static final String ADD_ITEM_WINDOW_TITLE = "Add ";
     public static final String EDIT_ITEM_WINDOW_TITLE = "Edit@ ";

@@ -17,22 +17,22 @@ public class OtherService {
     public static void editModel(String json, String type, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
 
         JSONObject jsonObject = new JSONObject(json);
-        String user_id = jsonObject.getString("_id");
+        String user_id = jsonObject.getString(KEY_GENERIC_ID);
         String extendedUrl = "-1";
         switch (type) {
-            case "badge":
+            case MODEL_NAME_BADGE:
                 extendedUrl = EXTENDED_URL_USERS;
                 break;
-            case "category":
+            case MODEL_NAME_CATEGORY:
                 extendedUrl = EXTENDED_URL_CATEGORY;
                 break;
-            case "challenge":
+            case MODEL_NAME_CHALLENGE:
                 extendedUrl = EXTENDED_URL_CHALLENGE;
                 break;
-            case "tag":
+            case MODEL_NAME_TAG:
                 extendedUrl = EXTENDED_URL_TAG;
                 break;
-            case "user":
+            case MODEL_NAME_USER:
                 extendedUrl = EXTENDED_URL_USERS;
                 break;
         }

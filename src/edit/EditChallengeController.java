@@ -46,16 +46,16 @@ public class EditChallengeController extends EditController {
 
         oldChallenge = new JSONObject(json);
 
-        Image image = new Image(BASE_URL + oldChallenge.getString("imageUrl"));
+        Image image = new Image(BASE_URL + oldChallenge.getString(KEY_CHALLENGE_IMAGE));
         imv_picture.setImage(image);
 
         initImv(scene, imv_picture);
 
-        txf_challenge_name.setText(oldChallenge.getString(JSON_ENTRY_KEY_CHALLENGE_NAME));
-        txa_challenge_details.setText(oldChallenge.getString(JSON_ENTRY_KEY_CHALLENGE_DETAILS));
-        txf_challenge_points.setText(String.valueOf(oldChallenge.getInt(JSON_ENTRY_KEY_CHALLENGE_POINTS_GIVEN)));
-        txf_challenge_duration.setText(String.valueOf(oldChallenge.getInt(JSON_ENTRY_KEY_CHALLENGE_DURATION)));
-        int verified = oldChallenge.getInt(JSON_ENTRY_KEY_CHALLENGE_VERIFIED);
+        txf_challenge_name.setText(oldChallenge.getString(KEY_CHALLENGE_NAME));
+        txa_challenge_details.setText(oldChallenge.getString(KEY_CHALLENGE_DETAILS));
+        txf_challenge_points.setText(String.valueOf(oldChallenge.getInt(KEY_CHALLENGE_POINTS_GIVEN)));
+        txf_challenge_duration.setText(String.valueOf(oldChallenge.getInt(KEY_CHALLENGE_DURATION)));
+        int verified = oldChallenge.getInt(KEY_CHALLENGE_VERIFIED);
         switch (verified) {
             case 0:
                 cmb_verified.getSelectionModel().selectFirst();
@@ -68,8 +68,8 @@ public class EditChallengeController extends EditController {
 
         }
 
-        initTagListView(oldChallenge.getJSONArray(JSON_ENTRY_KEY_CHALLENGE_TAGS).toString());
-        initBadgeListView(oldChallenge.getString(JSON_ENTRY_KEY_CHALLENGE_BADGE));
+        initTagListView(oldChallenge.getJSONArray(KEY_CHALLENGE_TAGS).toString());
+        initBadgeListView(oldChallenge.getString(KEY_CHALLENGE_BADGE));
         liv_badge.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 
         btn_cancel.setOnAction(this::onBtnCancelClick);
@@ -79,7 +79,7 @@ public class EditChallengeController extends EditController {
 
     private void onBtnValidateClick(ActionEvent event) {
         JSONObject newChallenge = new JSONObject();
-        newChallenge.put(JSON_ENTRY_KEY_ID, oldChallenge.getString(JSON_ENTRY_KEY_ID));
+        newChallenge.put(KEY_GENERIC_ID, oldChallenge.getString(KEY_GENERIC_ID));
         String chalName = txf_challenge_name.getText();
         String details = txa_challenge_details.getText();
         int points = Integer.parseInt(txf_challenge_points.getText());
@@ -103,18 +103,18 @@ public class EditChallengeController extends EditController {
         }
         String badge = badgesArray.getString(0);
 
-        newChallenge.put(JSON_ENTRY_KEY_CHALLENGE_NAME, chalName);
-        newChallenge.put(JSON_ENTRY_KEY_CHALLENGE_DETAILS, details);
-        newChallenge.put(JSON_ENTRY_KEY_CHALLENGE_POINTS_GIVEN, points);
-        newChallenge.put(JSON_ENTRY_KEY_CHALLENGE_DURATION, duration);
-        newChallenge.put(JSON_ENTRY_KEY_CHALLENGE_VERIFIED, verified);
-        newChallenge.put(JSON_ENTRY_KEY_CHALLENGE_TAGS, tagsArray);
-        newChallenge.put(JSON_ENTRY_KEY_CHALLENGE_BADGE, badge);
+        newChallenge.put(KEY_CHALLENGE_NAME, chalName);
+        newChallenge.put(KEY_CHALLENGE_DETAILS, details);
+        newChallenge.put(KEY_CHALLENGE_POINTS_GIVEN, points);
+        newChallenge.put(KEY_CHALLENGE_DURATION, duration);
+        newChallenge.put(KEY_CHALLENGE_VERIFIED, verified);
+        newChallenge.put(KEY_CHALLENGE_TAGS, tagsArray);
+        newChallenge.put(KEY_CHALLENGE_BADGE, badge);
 
         editModel(newChallenge.toString(), MODEL_NAME_CHALLENGE);
 
         if (newImage != null) {
-            ChallengeService.setChallengeImage(oldChallenge.getString(JSON_ENTRY_KEY_ID), newImage);
+            ChallengeService.setChallengeImage(oldChallenge.getString(KEY_GENERIC_ID), newImage);
         }
 
     }

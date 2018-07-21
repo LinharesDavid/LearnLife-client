@@ -11,8 +11,7 @@ import popup.PopupView;
 import service.BadgeService;
 
 
-import static utils.Constants.JSON_ENTRY_KEY_ID;
-import static utils.Constants.MODEL_NAME_BADGE;
+import static utils.Constants.*;
 
 public class AddBadgeController extends AddController {
 
@@ -46,7 +45,7 @@ public class AddBadgeController extends AddController {
                     response -> {
                         if (newImage != null) {
                             JSONObject badgeJson = new JSONObject(response);
-                            BadgeService.setBadgeImage(badgeJson.getString(JSON_ENTRY_KEY_ID), newImage);
+                            BadgeService.setBadgeImage(badgeJson.getString(KEY_GENERIC_ID), newImage);
                         }
                         view.onAddSuccess(MODEL_NAME_BADGE);
                         view.closeWindow();
