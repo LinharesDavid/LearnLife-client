@@ -70,4 +70,14 @@ public class OtherService {
             e.printStackTrace();
         }
     }
+
+    public static void getAllUserVote(OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
+        RequestBuilder.builder()
+                .setUrl(BASE_URL + EXTENDED_URL_USERVOTE)
+                .setRequestMethod("GET")
+                .addRequestProperty(REQUEST_PROPERTY_CONTENT_TYPE, REQUEST_PROPERTY_CONTENT_TYPE_JSON)
+                .setOnResponseSuccessListener(successListener)
+                .setOnResponseFailListener(failListener)
+                .build();
+    }
 }

@@ -20,6 +20,7 @@ public class Challenge {
     private String user;
     private int verified;
     private String rawJson;
+    private int votes;
 
     public Challenge(String name, String details, String imageUrl, int pointsGiven, String startDate, String endDate, int duration, ArrayList<String> tags, String badge, String user, int verified) {
         this.name = name;
@@ -52,6 +53,7 @@ public class Challenge {
             this.user = map.get(KEY_CHALLENGE_USER) == null ? "-1" : (String) map.get(KEY_CHALLENGE_USER);
             this.verified = map.get(KEY_CHALLENGE_VERIFIED) == null ? -1 : (int) map.get(KEY_CHALLENGE_VERIFIED);
             this.rawJson = map.get(KEY_GENERIC_RAW_JSON) == null ? "-1" : (String) map.get(KEY_GENERIC_RAW_JSON);
+            this.votes = map.get(KEY_CHALLENGE_VOTE) == null ? -1 : (int) map.get(KEY_CHALLENGE_VOTE);
         }
     }
 
@@ -161,6 +163,15 @@ public class Challenge {
         return this;
     }
 
+    public int getVotes() {
+        return votes;
+    }
+
+    public Challenge setVotes(int votes) {
+        this.votes = votes;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "Challenge{" +
@@ -175,6 +186,7 @@ public class Challenge {
                 ", badge=" + badge +
                 ", user=" + user +
                 ", verified=" + verified +
+                ", votes=" + votes +
                 '}';
     }
 }

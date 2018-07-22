@@ -14,6 +14,7 @@ import model.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import popup.PopupView;
 import service.*;
 import utils.Log;
 
@@ -35,7 +36,7 @@ public class MainController {
     private ArrayList<Object> values = new ArrayList<>();
 
     public void start() {
-        refresh(User.class.getSimpleName());
+        refresh(MODEL_NAME_USER);
 
         ObservableList<String> modelListViewItems = FXCollections.observableArrayList (
                 LEFT_PANNEL_TABLE_NAME_USER,
@@ -54,31 +55,31 @@ public class MainController {
                     currentTable = MODEL_NAME_USER;
                     tableView.getItems().remove(0, tableView.getItems().size());
                     tableView.getColumns().remove(0, tableView.getItems().size());
-                    refresh(User.class.getSimpleName());
+                    refresh(MODEL_NAME_USER);
                     break;
                 case LEFT_PANNEL_TABLE_NAME_TAG :
                     currentTable = MODEL_NAME_TAG;
                     tableView.getItems().remove(0, tableView.getItems().size());
                     tableView.getColumns().remove(0, tableView.getItems().size());
-                    refresh(Tag.class.getSimpleName());
+                    refresh(MODEL_NAME_TAG);
                     break;
                 case LEFT_PANNEL_TABLE_NAME_CHALLENGE :
                     currentTable = MODEL_NAME_CHALLENGE;
                     tableView.getItems().remove(0, tableView.getItems().size());
                     tableView.getColumns().remove(0, tableView.getItems().size());
-                    refresh(Challenge.class.getSimpleName());
+                    refresh(MODEL_NAME_CHALLENGE);
                     break;
                 case LEFT_PANNEL_TABLE_NAME_CATEGORY :
                     currentTable = MODEL_NAME_CATEGORY;
                     tableView.getItems().remove(0, tableView.getItems().size());
                     tableView.getColumns().remove(0, tableView.getItems().size());
-                    refresh(Category.class.getSimpleName());
+                    refresh(MODEL_NAME_CATEGORY);
                     break;
                 case LEFT_PANNEL_TABLE_NAME_BADGE :
                     currentTable = MODEL_NAME_BADGE;
                     tableView.getItems().remove(0, tableView.getItems().size());
                     tableView.getColumns().remove(0, tableView.getColumns().size());
-                    refresh(Badge.class.getSimpleName());
+                    refresh(MODEL_NAME_BADGE);
                     break;
             }
         });
@@ -186,24 +187,24 @@ public class MainController {
                     T selectedRow = (T) tableView.getSelectionModel().getSelectedItem();
                     EditView editView = new EditView();
                     if (selectedRow instanceof User) {
-                        editView.start(selectedRow.getClass().getSimpleName(), ((User) selectedRow).getRawJson());
-                        editView.setOnCloseEditWindowListener(() -> refresh(User.class.getSimpleName()));
+                        editView.start(MODEL_NAME_USER, ((User) selectedRow).getRawJson());
+                        editView.setOnCloseEditWindowListener(() -> refresh(MODEL_NAME_USER));
 
                     } else if (selectedRow instanceof Tag) {
-                        editView.start(selectedRow.getClass().getSimpleName(), ((Tag) selectedRow).getRawJson());
-                        editView.setOnCloseEditWindowListener(() -> refresh(Tag.class.getSimpleName()));
+                        editView.start(MODEL_NAME_TAG, ((Tag) selectedRow).getRawJson());
+                        editView.setOnCloseEditWindowListener(() -> refresh(MODEL_NAME_TAG));
 
                     } else if (selectedRow instanceof Badge) {
-                        editView.start(selectedRow.getClass().getSimpleName(), ((Badge) selectedRow).getRawJson());
-                        editView.setOnCloseEditWindowListener(() -> refresh(Badge.class.getSimpleName()));
+                        editView.start(MODEL_NAME_BADGE, ((Badge) selectedRow).getRawJson());
+                        editView.setOnCloseEditWindowListener(() -> refresh(MODEL_NAME_BADGE));
 
                     } else if (selectedRow instanceof Challenge) {
-                        editView.start(selectedRow.getClass().getSimpleName(), ((Challenge) selectedRow).getRawJson());
-                        editView.setOnCloseEditWindowListener(() -> refresh(Challenge.class.getSimpleName()));
+                        editView.start(MODEL_NAME_CHALLENGE, ((Challenge) selectedRow).getRawJson());
+                        editView.setOnCloseEditWindowListener(() -> refresh(MODEL_NAME_CHALLENGE));
 
                     } else if (selectedRow instanceof Category) {
-                        editView.start(selectedRow.getClass().getSimpleName(), ((Category) selectedRow).getRawJson());
-                        editView.setOnCloseEditWindowListener(() -> refresh(Category.class.getSimpleName()));
+                        editView.start(MODEL_NAME_CATEGORY, ((Category) selectedRow).getRawJson());
+                        editView.setOnCloseEditWindowListener(() -> refresh(MODEL_NAME_CATEGORY));
                     }
                 }
             });
@@ -218,6 +219,29 @@ public class MainController {
 
     private <T> void parseResponse(String response, Class<T> objType) {
         if (response.equals("[]")) return;
+        ArrayList<UserVote> userVotes = new ArrayList<>();
+        if (objType.getSimpleName().toLowerCase().equals(MODEL_NAME_CHALLENGE)) {
+            OtherService.getAllUserVote(
+                    res -> {
+                        JSONArray jsonArrayUV = new JSONArray(res);
+                        for (int i = 0; i < jsonArrayUV.length(); i++) {
+                            JSONObject jsonObjectUV = jsonArrayUV.getJSONObject(i);
+                            UserVote userVote = new UserVote(
+                                    jsonObjectUV.getString(KEY_GENERIC_ID),
+                                    jsonObjectUV.getString(KEY_USER_VOTE_USER),
+                                    jsonObjectUV.getString(KEY_USER_VOTE_CHALLENGE)
+                            );
+
+                            userVotes.add(userVote);
+                        }
+                    },
+                    (errCode, res) -> {
+                        PopupView popupView = new PopupView();
+                        popupView.start(ERR, ERR_GETTING_USER_VOTES, OK);
+                        popupView.addOnBtnOkListener(null);
+                    }
+            );
+        }
         try {
             JSONArray jsonArray = new JSONArray(response);
             int i = 0;
@@ -228,6 +252,17 @@ public class MainController {
                 } catch (JSONException e) {
                     break;
                 }
+                if (objType.getSimpleName().toLowerCase().equals(MODEL_NAME_CHALLENGE)) {
+
+                    int votes = 0;
+                    String id = jsonObject.getString(KEY_GENERIC_ID);
+                    for (UserVote userVote : userVotes) {
+                        if (userVote.getUser().equals(id)){
+                            votes++;
+                        }
+                    }
+                    jsonObject.put(KEY_CHALLENGE_VOTE, votes);
+                }
 
                 Set<String> ss = jsonObject.keySet();
                 Object[] ssarray = ss.toArray();
@@ -236,6 +271,9 @@ public class MainController {
 
                 for (Object o : ssarray) {
                     Object objToPutInTheMap = jsonObject.get(o.toString());
+
+
+
                     ArrayList<String> jsonArrayList = new ArrayList<>();
                     if (objToPutInTheMap instanceof JSONArray) {
                         int l = ((JSONArray) objToPutInTheMap).length();

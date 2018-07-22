@@ -14,6 +14,7 @@ public final class Constants {
     public static final String EXTENDED_URL_BADGE = "badges/";
     public static final String EXTENDED_URL_THUMBNAIL = "/thumbnail";
     public static final String EXTENDED_URL_IMAGE = "/image";
+    public static final String EXTENDED_URL_USERVOTE = "uservotes/";
 
     public static final String REQUEST_PROPERTY_CONTENT_TYPE ="Content-Type";
     public static final String REQUEST_PROPERTY_CONTENT_TYPE_JSON ="application/json";
@@ -60,10 +61,14 @@ public final class Constants {
     public static final String KEY_CHALLENGE_BADGE = "badge";
     public static final String KEY_CHALLENGE_USER = "user";
     public static final String KEY_CHALLENGE_VERIFIED = "verified";
+    public static final String KEY_CHALLENGE_VOTE = "votes";
     //Tag
     public static final String KEY_TAG_NAME = "name";
     public static final String KEY_TAG_TAG_ASSOSCIATED = "tagAssociated";
     public static final String KEY_TAG_CATEGORY = "category";
+    //UserVote
+    public static final String KEY_USER_VOTE_USER = "user";
+    public static final String KEY_USER_VOTE_CHALLENGE = "challenge";
 
     // **************************** WORDING ****************************
 
@@ -71,6 +76,7 @@ public final class Constants {
     public static final String ERR_UNKNOWN = "Unknown error";
     public static final String ERR_READING_RESPONSE = "Error while reading response";
     public static final String ERR_FILL_FIELDS = "You must fill\nall the fields\nwith a *";
+    public static final String ERR_GETTING_USER_VOTES = "Error getting uservotes";
     public static final String ERR_CONTENT_DIDNT_CHANGED = "An error ossured,\nthe content didn't change";
     public static final String DELETE_SELECTED_ITEM = "Delete Selected Item";
     public static final String ADD_ITEM = "Add Item";
