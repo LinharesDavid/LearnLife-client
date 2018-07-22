@@ -16,12 +16,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import popup.PopupView;
 import service.*;
-import utils.Log;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 import static utils.Constants.*;
@@ -89,7 +87,6 @@ public class MainController {
     private <T> void addColumn(Class<T> objType) {
         tableView.getColumns().clear();
         try {
-            // Add the columns with the right title
             Class cls = Class.forName(values.get(0).getClass().getName());
             Field[] fields = cls.getDeclaredFields();
             for (Field field : fields) {
@@ -102,7 +99,6 @@ public class MainController {
                 tableView.getColumns().add(col);
             }
 
-            // Manage the context menu
             final ContextMenu tableContextMenu = new ContextMenu();
             final MenuItem deleteSelectedMenuItem = new MenuItem(DELETE_SELECTED_ITEM);
             final MenuItem addElement = new MenuItem(ADD_ITEM);
@@ -110,7 +106,6 @@ public class MainController {
             deleteSelectedMenuItem.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
             viewJson.disableProperty().bind(Bindings.isEmpty(tableView.getSelectionModel().getSelectedItems()));
             deleteSelectedMenuItem.setOnAction(event -> {
-                //final List<T> selectedRows = new ArrayList<>(tableView.getSelectionModel().getSelectedItems());
                 T selectedRow = (T) tableView.getSelectionModel().getSelectedItem();
                 if (selectedRow instanceof User) {
                     UserService.deleteUser(
@@ -174,7 +169,6 @@ public class MainController {
 
             tableContextMenu.getItems().addAll(deleteSelectedMenuItem, addElement, viewJson);
 
-            // Manage when to show or hide the context menu
             tableView.setOnMouseClicked(event -> {
                 if (event.getButton() == MouseButton.SECONDARY) {
                     tableContextMenu.show(tableView, event.getScreenX(), event.getScreenY());
@@ -209,7 +203,6 @@ public class MainController {
                 }
             });
 
-            //Add all the rows to the tableview
             tableView.getItems().addAll(values);
         } catch (Exception e) {
             e.printStackTrace();

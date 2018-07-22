@@ -1,9 +1,5 @@
 package model;
 
-import java.util.HashMap;
-
-import static utils.Constants.*;
-
 public class UserVote {
 
     private String _id;

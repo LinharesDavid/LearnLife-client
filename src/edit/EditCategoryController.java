@@ -6,7 +6,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import org.json.JSONObject;
 
-
 import static utils.Constants.*;
 
 public class EditCategoryController extends BaseEditController {

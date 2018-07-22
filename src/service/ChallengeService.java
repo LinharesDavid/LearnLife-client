@@ -1,7 +1,5 @@
 package service;
 
-import javafx.scene.Scene;
-import model.Challenge;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -10,12 +8,9 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
-import utils.Log;
 import utils.request.builder.OnRequestFailListener;
 import utils.request.builder.OnRequestSuccessListener;
 import utils.request.builder.RequestBuilder;
-
-import javax.swing.text.html.ImageView;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,7 +61,6 @@ public class ChallengeService {
             HttpPost uploadFile = new HttpPost(BASE_URL + EXTENDED_URL_CHALLENGE + challengeId + EXTENDED_URL_IMAGE);
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
-            // This attaches the file to the POST:
             builder.addBinaryBody(
                     "image",
                     new FileInputStream(image),

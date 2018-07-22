@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import popup.PopupView;
 import service.BadgeService;
 
-
 import static utils.Constants.*;
 
 public class AddBadgeController extends BaseAddController {

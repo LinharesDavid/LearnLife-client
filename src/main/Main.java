@@ -6,9 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import login.LoginView;
-import utils.Log;
 
-import static utils.Constants.*;
+import static utils.Constants.MAIN_WINDOW_TITLE;
 
 public class Main extends Application implements OnCloseLoginListener{
 

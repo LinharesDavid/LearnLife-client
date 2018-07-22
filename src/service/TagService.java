@@ -3,8 +3,6 @@ package service;
 import model.Tag;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import popup.PopupView;
-import utils.Log;
 import utils.request.builder.OnRequestFailListener;
 import utils.request.builder.OnRequestSuccessListener;
 import utils.request.builder.RequestBuilder;

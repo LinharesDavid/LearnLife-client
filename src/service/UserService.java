@@ -8,16 +8,12 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
-import utils.Log;
 import utils.request.builder.OnRequestFailListener;
 import utils.request.builder.OnRequestSuccessListener;
 import utils.request.builder.RequestBuilder;
 
-import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.ParseException;
+import java.io.File;
+import java.io.FileInputStream;
 
 import static utils.Constants.*;
 
@@ -85,7 +81,6 @@ public class UserService {
             HttpPost uploadFile = new HttpPost(BASE_URL + EXTENDED_URL_USERS + userId + EXTENDED_URL_THUMBNAIL);
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
-            // This attaches the file to the POST:
             builder.addBinaryBody(
                     "image",
                     new FileInputStream(image),

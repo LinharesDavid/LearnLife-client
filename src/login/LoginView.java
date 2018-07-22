@@ -10,7 +10,8 @@ import javafx.stage.WindowEvent;
 import main.OnCloseLoginListener;
 import popup.PopupView;
 
-import static utils.Constants.*;
+import static utils.Constants.ERR;
+import static utils.Constants.OK;
 
 public class LoginView implements LoginController.ConnexionListener{
 

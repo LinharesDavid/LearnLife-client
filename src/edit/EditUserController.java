@@ -11,7 +11,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import service.UserService;
 
-
 import java.util.ArrayList;
 
 import static utils.Constants.*;
