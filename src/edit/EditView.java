@@ -19,7 +19,7 @@ public class EditView {
     public void start(String type, String json) {
         try {
             FXMLLoader loader = new FXMLLoader();
-            String filename = "../add/add_" + type.toLowerCase() + "_window.fxml";
+            String filename = "/add/add_" + type.toLowerCase() + "_window.fxml";
             loader.setLocation(getClass().getResource(filename));
             GridPane rootLayout = loader.load();
             stage.setTitle(EDIT_ITEM_WINDOW_TITLE + type);

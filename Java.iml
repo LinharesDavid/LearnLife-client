@@ -9,8 +9,11 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="org.json:json:20180130" level="project" />
     <orderEntry type="library" name="com.google.code.gson:gson:2.8.5" level="project" />
-    <orderEntry type="library" name="org.eclipse.ecf:org.apache.httpcomponents.httpclient:4.5.2.v20170210-0925" level="project" />
-    <orderEntry type="library" name="org.eclipse.ecf:org.apache.httpcomponents.httpcore:4.4.6.v20170210-0925" level="project" />
-    <orderEntry type="library" name="commons-logging-1.2" level="project" />
+    <orderEntry type="library" name="commons-logging:commons-logging:1.2" level="project" />
+    <!--<orderEntry type="library" name="org.apache.httpcomponents:httpclient:4.5.5" level="project" />
+    <orderEntry type="library" name="org.apache.httpcomponents:httpcore:4.4.10" level="project" />-->
+    <orderEntry type="library" name="httpmime-4.3" level="project" />
+    <orderEntry type="library" name="httpcore-4.4.10" level="project" />
+    <orderEntry type="library" name="httpclient-4.5.6" level="project" />
   </component>
 </module>
