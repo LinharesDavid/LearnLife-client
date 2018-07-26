@@ -106,6 +106,19 @@ public class BaseAddController {
         return badgeArray;
     }
 
+    String getBadgeID(ListView listView) {
+        String badgeid = "";
+        for (Object o : listView.getSelectionModel().getSelectedItems()) {
+            String name = (String) o;
+            for (Badge badge : badges) {
+                if (badge.getName().equals(name)) {
+                    badgeid = badge.get_id();
+                }
+            }
+        }
+        return badgeid;
+    }
+
     JSONArray getTagsArray(ListView listView) {
         JSONArray tagsArray = new JSONArray();
         for (Object o : listView.getSelectionModel().getSelectedItems()) {

@@ -63,6 +63,7 @@ public class AddChallengeController extends BaseAddController {
             String badge = null;
             if (liv_badge.getSelectionModel().getSelectedItem() != null) {
                 badge = liv_badge.getSelectionModel().getSelectedItem().toString();
+                badge = getBadgeID(liv_badge);
             }
             ChallengeService.addChallenge(
                     name,
