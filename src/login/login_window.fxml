@@ -19,10 +19,10 @@
     <Label text="password : " GridPane.columnIndex="0" GridPane.rowIndex="2" />
 
     <PasswordField fx:id="txf_password" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+   <TextField fx:id="txf_url" promptText="fill if custom URL" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
     <Button mnemonicParsing="false" onAction="#onBtnValidateClick" text="Validate" GridPane.columnIndex="1" GridPane.rowIndex="4" />
    <Label text="URL :" GridPane.rowIndex="3" />
-   <TextField fx:id="txf_url" promptText="fill if custom URL" GridPane.columnIndex="1" GridPane.rowIndex="3" />
    <columnConstraints>
       <ColumnConstraints />
       <ColumnConstraints />

@@ -92,6 +92,8 @@ public class MainController {
             for (Field field : fields) {
                 if (field.getName().toLowerCase().equals(KEY_GENERIC_RAW_JSON)) continue;
                 if (field.getName().toLowerCase().equals(KEY_BADGE_IMAGE)) continue;
+                if (field.getName().toLowerCase().equals("imageurl")) continue;
+                if (field.getName().toLowerCase().equals(KEY_USER_IMAGE)) continue;
                 TableColumn col = new TableColumn(field.getName());
                 col.setMaxWidth(400);
                 col.setCellValueFactory(new PropertyValueFactory<>
