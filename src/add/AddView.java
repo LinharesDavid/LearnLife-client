@@ -36,8 +36,10 @@ public class AddView {
                     break;
                 case MODEL_NAME_CATEGORY:
                     ((AddCategoryController) controller).init(scene);
+                    break;
                 case MODEL_NAME_CHALLENGE:
                     ((AddChallengeController) controller).init(scene);
+                    break;
             }
             controller.setView(this);
             stage.setTitle(ADD_ITEM_WINDOW_TITLE + type);

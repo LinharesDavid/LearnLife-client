@@ -62,6 +62,9 @@ public class EditUserController extends BaseEditController {
         txf_user_lastname.setText(oldUser.getString(KEY_USER_LASTNAME));
         txf_user_points.setText(String.valueOf(oldUser.getInt(KEY_USER_POINTS)));
 
+        int userRole = oldUser.getInt(KEY_USER_ROLE);
+        cmb_user_role.getSelectionModel().select(userRole);
+
         btn_validate.setOnAction(this::onBtnValidateClick);
         btn_cancel.setOnAction(this::onBtnCancelClick);
         btn_unselect_badges.setOnAction(this::onBtnUnselectBadgesClick);
