@@ -2,7 +2,7 @@ package utils;
 
 public final class Constants {
 
-    public static String BASE_URL = "http://10.33.1.202:8080/";
+    public static String BASE_URL = "http://192.168.1.29:8080/";
 
     public static final String MAIN_WINDOW_TITLE = "Learn Life";
 

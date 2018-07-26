@@ -39,14 +39,18 @@ public class ChallengeService {
                 .build();
     }
 
-    public static void addChallenge(String name, String details, int points, int duration, JSONArray tags, JSONArray badge, int verified, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
-        RequestBuilder.builder()
+    public static void addChallenge(String name, String details, int points, int duration, JSONArray tags, String badge, int verified, OnRequestSuccessListener successListener, OnRequestFailListener failListener) {
+        RequestBuilder requestBuilder = RequestBuilder.builder();
+        if (badge != null) {
+            requestBuilder
+                .addRequestBodyParameter(KEY_CHALLENGE_BADGE, badge);
+        }
+        requestBuilder
                 .setUrl(BASE_URL + EXTENDED_URL_CHALLENGE)
                 .setRequestMethod("POST")
                 .addRequestBodyParameter(KEY_CHALLENGE_NAME, name)
                 .addRequestBodyParameter(KEY_CHALLENGE_DETAILS, details)
                 .addRequestBodyParameter(KEY_CHALLENGE_TAGS, tags)
-                .addRequestBodyParameter(KEY_CHALLENGE_BADGE, badge)
                 .addRequestBodyParameter(KEY_CHALLENGE_DURATION, duration)
                 .addRequestBodyParameter(KEY_CHALLENGE_VERIFIED, verified)
                 .addRequestBodyParameter(KEY_CHALLENGE_POINTS_GIVEN, points)

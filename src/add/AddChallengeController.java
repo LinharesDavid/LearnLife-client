@@ -31,6 +31,7 @@ public class AddChallengeController extends BaseAddController {
         initBadgeListView();
         initTagListView();
         setTxfNumbersOnly(txf_challenge_duration);
+        setTxfNumbersOnly(txf_challenge_points);
         initImv(scene, imv_picture);
     }
 
@@ -59,13 +60,17 @@ public class AddChallengeController extends BaseAddController {
         } else {
             int duration = Integer.parseInt(durationStr);
             JSONArray badgesArray = getBadgesArray(liv_badge);
+            String badge = null;
+            if (liv_badge.getSelectionModel().getSelectedItem() != null) {
+                badge = liv_badge.getSelectionModel().getSelectedItem().toString();
+            }
             ChallengeService.addChallenge(
                     name,
                     details,
                     points,
                     duration,
                     tagsArray,
-                    badgesArray,
+                    badge,
                     verified,
                     response -> {
                         if (newImage != null) {

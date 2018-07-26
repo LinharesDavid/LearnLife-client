@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import org.json.JSONObject;
+import popup.PopupView;
 import utils.Log;
 
 import java.io.*;
@@ -75,6 +76,9 @@ public class RequestBuilder {
 
         } catch (Exception e){
             e.printStackTrace();
+            PopupView popupView = new PopupView();
+            popupView.start(ERR, ERR_UNKNOWN, OK);
+            popupView.addOnBtnOkListener(null);
         }
 
     }
